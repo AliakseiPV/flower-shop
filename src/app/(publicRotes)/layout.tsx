@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 
-export default function DashboardLayout({
+export default function PublicLayout({
 	children,
 }: PropsWithChildren<unknown>) {
 	return (

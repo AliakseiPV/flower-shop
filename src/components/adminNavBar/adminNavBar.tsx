@@ -12,7 +12,6 @@ const AdminNavBar: FC = () => {
 			</nav>
 			<button>Logout</button>
 		</div>
-
 	)
 }
 

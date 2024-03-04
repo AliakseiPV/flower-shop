@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import Image from 'next/image'
 
 type inputImageTypes = {
@@ -10,18 +10,20 @@ type inputImageTypes = {
 }
 
 const InputImage = (props: inputImageTypes) => {
-	const { inputName, imgWidth, imgHeight} = props
+	const { inputName, imgWidth, imgHeight } = props
 	const [selectedImage, setSelectedImage] = useState('')
+
+	const changeInputImgHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
+		if (target.files) {
+			const file = target.files[0]
+			setSelectedImage(URL.createObjectURL(file))
+		}
+	}
 
 	return (
 		<label>
 			<input
-				onChange={({ target }) => {
-					if (target.files) {
-						const file = target.files[0]
-						setSelectedImage(URL.createObjectURL(file))
-					}
-				}}
+				onChange={changeInputImgHandler}
 				type="file"
 				name={inputName}
 				accept="image/png, image/jpeg"

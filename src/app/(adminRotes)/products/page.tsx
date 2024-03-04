@@ -29,9 +29,9 @@ const ProductsPage: FC = async () => {
 				</div>
 				<div>
 					<div>
-						<InputImage inputName={'productImage'} imgWidth={200} imgHeight={250} />
-						<InputImage inputName={'productImage'} imgWidth={200} imgHeight={250} />
-						<InputImage inputName={'productImage'} imgWidth={200} imgHeight={250} />
+						<InputImage inputName={'productImage'} imgWidth={150} imgHeight={200} />
+						<InputImage inputName={'productImage'} imgWidth={150} imgHeight={200} />
+						<InputImage inputName={'productImage'} imgWidth={150} imgHeight={200} />
 					</div>
 					<div>
 						<input type="text" name='name' placeholder='Name...' />

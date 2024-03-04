@@ -15,7 +15,7 @@ async function main() {
 			isAdmin: true
 		}
 	})
-	console.log(user);
+	console.log(user)
 }
 
 main()

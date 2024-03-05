@@ -1,29 +1,13 @@
-import { FC, useState } from 'react'
-import { prisma } from '@/prisma'
-import Image from 'next/image'
+import { FC } from 'react'
 import { InputImage } from '@/components'
+import { addProduct } from '@/actions/actions'
 
 
 const ProductsPage: FC = async () => {
 
-	const user = await prisma.user.findFirst({
-		where: {
-			email: 'test@test.com'
-		}
-	})
-
-	const addProduct = async (formData: FormData) => {
-		"use server"
-
-		const productImages = formData.getAll('productImage')
-
-	}
-
 	return (
 		<div>
-
-			{/* Hello {user?.name} */}
-			<form action="">
+			<form action={addProduct}>
 				<div>
 					<InputImage inputName={'productImage'} imgWidth={250} imgHeight={300} />
 				</div>
@@ -34,17 +18,21 @@ const ProductsPage: FC = async () => {
 						<InputImage inputName={'productImage'} imgWidth={150} imgHeight={200} />
 					</div>
 					<div>
-						<input type="text" name='name' placeholder='Name...' />
-						<input type="text" name='short-description' placeholder='Short description...' />
+						<input type="text" name='title' placeholder='Name...' required />
+						<input type="text" name='details' placeholder='Short description...' required />
 						<input type="text" name='description' placeholder='Description...' />
-						<input type="text" name='price' placeholder='Price' />
+						<input type="number" step="0.01" name='price' placeholder='Price' />
 					</div>
 					<div>
-						<button>Available</button>
+						<label>
+							<input type="checkbox" name="availability" value="true" />
+						</label>
 						<button>Submit</button>
 					</div>
 				</div>
+
 			</form>
+
 		</div>
 	)
 }

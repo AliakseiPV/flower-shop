@@ -3,13 +3,13 @@
 import { ChangeEvent, useState } from 'react'
 import Image from 'next/image'
 
-type inputImageTypes = {
+type inputImageType = {
 	inputName: string,
 	imgWidth: number,
 	imgHeight: number
 }
 
-const InputImage = (props: inputImageTypes) => {
+const InputImage = (props: inputImageType) => {
 	const { inputName, imgWidth, imgHeight } = props
 	const [selectedImage, setSelectedImage] = useState('')
 

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef } from 'react'
-import { addProduct } from '@/actions/actions'
+import { addProduct } from '@/actions/productActions'
 import { InputImage } from '../inputImage'
 
 const AdminForm = () => {

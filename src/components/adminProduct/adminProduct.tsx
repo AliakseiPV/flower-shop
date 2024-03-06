@@ -1,6 +1,6 @@
 import type { productType } from '@/types/productType';
 import Image from 'next/image'
-import { deleteProduct } from '@/actions/actions';
+import { deleteProduct } from '@/actions/productActions';
 import { Button } from '../button';
 
 const AdminProduct = (props: { product: productType }) => {

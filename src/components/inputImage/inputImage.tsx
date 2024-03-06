@@ -2,21 +2,42 @@
 
 import { ChangeEvent, useState } from 'react'
 import Image from 'next/image'
+import { useFormStatus } from 'react-dom'
 
 type inputImageType = {
 	inputName: string,
 	imgWidth: number,
-	imgHeight: number
+	imgHeight: number,
 }
 
 const InputImage = (props: inputImageType) => {
 	const { inputName, imgWidth, imgHeight } = props
-	const [selectedImage, setSelectedImage] = useState('')
+
+	const { pending } = useFormStatus()
+	const [image, setImage] = useState('')
 
 	const changeInputImgHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
 		if (target.files) {
 			const file = target.files[0]
-			setSelectedImage(URL.createObjectURL(file))
+			setImage(URL.createObjectURL(file))
+		}
+	}
+
+	const showImage = () => {
+		if (!pending && !image) {
+			return (<span>Add Image</span>)
+		}
+		if (!pending && image) {
+			return (<Image
+				src={image}
+				alt={'product-image'}
+				width={imgWidth}
+				height={imgHeight}
+			/>)
+		}
+		if (pending && image) {
+			setImage('')
+			return (<span>Add Image</span>)
 		}
 	}
 
@@ -30,16 +51,7 @@ const InputImage = (props: inputImageType) => {
 				hidden
 			/>
 			<div>
-				{selectedImage ?
-					(<Image
-						src={selectedImage}
-						alt={'product-image'}
-						width={imgWidth}
-						height={imgHeight}
-					/>) : (
-						<span>Add Image</span>
-					)
-				}
+				{showImage()}
 			</div>
 		</label>
 	)

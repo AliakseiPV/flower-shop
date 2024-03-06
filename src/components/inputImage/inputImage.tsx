@@ -24,7 +24,7 @@ const InputImage = (props: inputImageType) => {
 	}
 
 	const showImage = () => {
-		if (!pending && !image) {
+		if (!pending && !image ) {
 			return (<span>Add Image</span>)
 		}
 		if (!pending && image) {

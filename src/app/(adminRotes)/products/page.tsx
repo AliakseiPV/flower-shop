@@ -8,11 +8,11 @@ const ProductsPage: FC = async () => {
 
 	return (
 		<div>
-			<AdminForm/>
+			<AdminForm />
 
 			<div>
 				{products.map((product) => (
-					<AdminProduct img={product.img[0]} title={product.title}/>
+					<AdminProduct product={product} />		
 				))}
 			</div>
 

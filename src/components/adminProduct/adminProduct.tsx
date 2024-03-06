@@ -1,16 +1,27 @@
-import React from 'react'
+import type { productType } from '@/types/productType';
 import Image from 'next/image'
+import { deleteProduct } from '@/actions/actions';
+import { Button } from '../button';
 
-const AdminProduct = (product: { img: string; title: string }) => {
+const AdminProduct = (props: { product: productType }) => {
+	const { product } = props
 	return (
 		<div>
-			<button>delete</button>
-			<Image
-				src={`/images/${product.img}`}
-				alt={product.title}
-				width={200}
-				height={250} />
-			<button>Edit</button>
+			<Button product={product} clickHandlerAction={deleteProduct} />
+			{
+				product.img.length
+					?
+					<Image
+						src={`/images/${product.img[0]}`}
+						alt={product.title}
+						width={200}
+						height={250} />
+					:
+					<div>No Image</div>
+			}
+			<button>
+				Edit
+			</button>
 		</div>
 	)
 }

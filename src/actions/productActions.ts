@@ -4,6 +4,7 @@ import { prisma } from '@/prisma'
 import { revalidatePath } from 'next/cache'
 import { productType } from '@/types/productType'
 import { deleteImage, uploadImage } from './fileActions'
+import { getErrorMessage } from '@/utiles/getErrorMessage'
 
 export const addProduct = async (formData: FormData) => {
 	try {
@@ -26,7 +27,7 @@ export const addProduct = async (formData: FormData) => {
 			}
 		})
 	} catch (error) {
-		return { error }
+		return { error: getErrorMessage(error) }
 	}
 
 	revalidatePath('/products')
@@ -43,7 +44,7 @@ export const deleteProduct = async (product: productType) => {
 			}
 		})
 	} catch (error) {
-		return { error }
+		return { error: getErrorMessage(error) }
 	}
 
 	revalidatePath('/products')

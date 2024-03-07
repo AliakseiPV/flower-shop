@@ -3,6 +3,7 @@
 import React, { useRef } from 'react'
 import { addProduct } from '@/actions/productActions'
 import { InputImage } from '../inputImage'
+import { toast } from 'react-hot-toast'
 
 const AdminForm = () => {
 
@@ -13,7 +14,12 @@ const AdminForm = () => {
 			ref={ref}
 			action={async (formData) => {
 				ref.current?.reset()
-				await addProduct(formData)
+				const result = await addProduct(formData)
+				if (result?.error) {
+					toast.error(result.error)
+				} else {
+					toast.success("Product added")
+				}
 			}}
 		>
 			<div>

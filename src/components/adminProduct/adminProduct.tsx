@@ -1,13 +1,24 @@
 import type { productType } from '@/types/productType';
 import Image from 'next/image'
 import { deleteProduct } from '@/actions/productActions';
-import { Button } from '../button';
+import { ActionButton } from '../actionButton';
+import Link from 'next/link';
 
-const AdminProduct = (props: { product: productType }) => {
-	const { product } = props
+const AdminProduct = ({
+	product
+}: {
+	product: productType,
+}
+) => {
+
 	return (
 		<div>
-			<Button product={product} clickHandlerAction={deleteProduct} />
+			<ActionButton
+				product={product}
+				clickHandlerAction={deleteProduct}
+			>
+				delete
+			</ActionButton>
 			{
 				product.img.length
 					?
@@ -19,9 +30,10 @@ const AdminProduct = (props: { product: productType }) => {
 					:
 					<div>No Image</div>
 			}
-			<button>
+			<Link
+				href={`?id=${product.id}&modal=PUT`}>
 				Edit
-			</button>
+			</Link>
 		</div>
 	)
 }

@@ -6,14 +6,14 @@ import { useRouter } from 'next/navigation'
 import type { productType } from '@/types/productType'
 
 
-const AdminForm = async ({
+const AdminForm = ({
 	productAction,
 	successMessage,
 	product,
 }: {
 	productAction: Function,
 	successMessage: string,
-	product: productType | null
+	product: productType | null,
 }
 ) => {
 
@@ -21,7 +21,7 @@ const AdminForm = async ({
 
 	const formAction = async (formData: FormData) => {
 		router.back()
-		const result = await productAction(formData)
+		const result = await productAction(formData, product)
 		if (result?.error) {
 			toast.error(result.error)
 		} else {
@@ -37,8 +37,8 @@ const AdminForm = async ({
 			<div>
 				<div>
 					<InputImage
-						imgSrc={product?.img[0] ? `/images/${product.img[0]}` : ''}
-						inputName={'productImage'}
+						imgSrc={product?.img[0].length ? `/images/${product.img[0]}` : ''}
+						inputName={'Image0'}
 						imgWidth={250}
 						imgHeight={300}
 					/>
@@ -46,18 +46,18 @@ const AdminForm = async ({
 				<div>
 					<div>
 						<InputImage
-							imgSrc={product?.img[1] ? `/images/${product.img[1]}` : ''}
-							inputName={'productImage'}
+							imgSrc={product?.img[1].length ? `/images/${product.img[1]}` : ''}
+							inputName={'Image1'}
 							imgWidth={150}
 							imgHeight={200} />
 						<InputImage
-							imgSrc={product?.img[2] ? `/images/${product.img[2]}` : ''}
-							inputName={'productImage'}
+							imgSrc={product?.img[2].length ? `/images/${product.img[2]}` : ''}
+							inputName={'Image2'}
 							imgWidth={150}
 							imgHeight={200} />
 						<InputImage
-							imgSrc={product?.img[3] ? `/images/${product.img[3]}` : ''}
-							inputName={'productImage'}
+							imgSrc={product?.img[3].length ? `/images/${product.img[3]}` : ''}
+							inputName={'Image3'}
 							imgWidth={150}
 							imgHeight={200} />
 					</div>

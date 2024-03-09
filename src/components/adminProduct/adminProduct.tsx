@@ -11,6 +11,19 @@ const AdminProduct = ({
 }
 ) => {
 
+	const findImg = (product: productType) => {
+		let imgId = null
+		for (let i = 0; i < product.img.length; i++) {
+			if (product.img[i].length) {
+				imgId = i
+				break
+			}
+		}
+		return imgId
+	}
+
+	const imgId = findImg(product)
+
 	return (
 		<div>
 			<ActionButton
@@ -20,10 +33,10 @@ const AdminProduct = ({
 				delete
 			</ActionButton>
 			{
-				product.img.length
+				imgId
 					?
 					<Image
-						src={`/images/${product.img[0]}`}
+						src={`/images/${product.img[imgId]}`}
 						alt={product.title}
 						width={200}
 						height={250} />

@@ -1,4 +1,4 @@
-import { addProduct } from '@/actions/productActions'
+import { addProduct, updateProduct, findProductById } from '@/actions/productActions'
 import { AdminForm, AdminProduct, Modal } from '@/components'
 import { prisma } from '@/prisma'
 import Link from 'next/link'
@@ -12,15 +12,7 @@ const ProductsPage = async ({
 	const productId = Number(searchParams.id)
 
 	const products = await prisma.product.findMany()
-
-	let product = null
-	if (productId) {
-		product = await prisma.product.findUnique({
-			where: {
-				id: productId
-			}
-		})
-	}
+	const product = await findProductById(productId)
 
 	return (
 		<div>
@@ -41,7 +33,7 @@ const ProductsPage = async ({
 			{modal === 'PUT' &&
 				<Modal searchParams={{ modal }}>
 					<AdminForm
-						productAction={addProduct}
+						productAction={updateProduct}
 						successMessage={'Product updated'}
 						product={product}
 					/>

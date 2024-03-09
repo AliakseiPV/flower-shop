@@ -4,29 +4,29 @@ import { join } from 'path'
 import { writeFile, stat, unlink } from 'fs/promises'
 import { renameFile } from '@/utiles/renameFile'
 
-export const uploadImage = async (data: FormData) => {
+export const uploadImage = async (data: FormData, inputName: string) => {
 	try {
-		const files: File[] | null = data.getAll('productImage') as unknown as File[]
-		const fileNames: string[] = []
+		const file: File | null = data.get(inputName) as unknown as File
 
-		files.forEach(async file => {
-			if (!file.name || file.name === 'undefined') {
-				return
-			}
-
+		if (!file) {
+			throw new Error('No file uploaded')
+		}
+		
+		if (file.name !== 'undefined') {
 			const newFile = renameFile(file)
-			fileNames.push(newFile.name)
 
 			const bytes = await newFile.arrayBuffer()
 			const buffer = Buffer.from(bytes)
 
 			const path = join('./public', 'images', newFile.name)
 			await writeFile(path, buffer)
-		})
-		return {
-			names: fileNames,
-			success: true
+
+			return {
+				name: newFile.name,
+				success: true
+			}
 		}
+
 	} catch (error) {
 		return { error }
 	}
@@ -35,9 +35,11 @@ export const uploadImage = async (data: FormData) => {
 export const deleteImage = async (name: string) => {
 	try {
 		const path = join('./public', 'images', name)
-		await stat(path)
-		await unlink(path)
+		const fileStat = await stat(path)
 
+		if (fileStat.isFile()) {
+			await unlink(path)
+		}
 	} catch (error) {
 		return { error }
 	}

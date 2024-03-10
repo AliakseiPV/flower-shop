@@ -1,22 +1,19 @@
-"use client"
+import { MouseEventHandler, ReactNode } from "react"
 
-import type { productType } from "@/types/productType"
-import {toast} from "react-hot-toast"
+const Button = ({
+	clickHandler, style, children
+}: {
+	clickHandler: MouseEventHandler<HTMLButtonElement>,
+	children: ReactNode | undefined,
+	style?: string | undefined,
+}) => {
 
-const Button = async (props: { product: productType, clickHandlerAction: Function }) => {
-	const { product, clickHandlerAction } = props
 	return (
 		<button
-			onClick={async () => {
-				const result = await clickHandlerAction(product)
-				if (result?.error) {
-					toast.error(result.error)
-				} else {
-					toast.success("Product deleted")
-				}
-			}}
+			onClick={clickHandler}
+			className={style}
 		>
-			delete
+			{children}
 		</button>
 	)
 }

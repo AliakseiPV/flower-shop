@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { deleteProduct } from '@/actions/productActions';
 import { ActionButton } from '../actionButton';
 import Link from 'next/link';
+import style from './adminProduct.module.css'
 
 const AdminProduct = ({
 	product
@@ -11,32 +12,38 @@ const AdminProduct = ({
 }
 ) => {
 
+
 	const findImg = (product: productType) => {
-		let imgId = null
+		let img = {
+			name: '',
+			id: 0 
+		} 
 		for (let i = 0; i < product.img.length; i++) {
 			if (product.img[i].length) {
-				imgId = i
+				img.name = product.img[i]
+				img.id = i
 				break
 			}
 		}
-		return imgId
+		return img
 	}
 
-	const imgId = findImg(product)
+	const img = findImg(product)
 
 	return (
-		<div>
+		<div className={style['product-wrapper']}>
 			<ActionButton
+				className={style.button}
 				product={product}
 				clickHandlerAction={deleteProduct}
 			>
 				delete
 			</ActionButton>
 			{
-				imgId
+				img.name
 					?
 					<Image
-						src={`/images/${product.img[imgId]}`}
+						src={`/images/${product.img[img.id]}`}
 						alt={product.title}
 						width={200}
 						height={250} />
@@ -44,7 +51,9 @@ const AdminProduct = ({
 					<div>No Image</div>
 			}
 			<Link
-				href={`?id=${product.id}&modal=PUT`}>
+				className={style['edit-btn']}
+				href={`?id=${product.id}&modal=PUT`}
+			>
 				Edit
 			</Link>
 		</div>

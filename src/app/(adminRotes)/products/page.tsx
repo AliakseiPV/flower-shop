@@ -2,6 +2,7 @@ import { addProduct, updateProduct, findProductById } from '@/actions/productAct
 import { AdminForm, AdminProduct, Modal } from '@/components'
 import { prisma } from '@/prisma'
 import Link from 'next/link'
+import styles from './page.module.css'
 
 const ProductsPage = async ({
 	searchParams }: {
@@ -15,11 +16,18 @@ const ProductsPage = async ({
 	const product = await findProductById(productId)
 
 	return (
-		<div>
+		<main className={styles.main}>
+			<div className={styles.header}>
+				<h1 className={styles.title}>Product</h1>
 
-			<Link href={`?modal=POST`}>
-				Add new Product
-			</Link>
+				<Link
+					href={`?modal=POST`}
+				>
+					Add new Product
+				</Link>
+
+				<div>Filter</div>
+			</div>
 
 			{modal === 'POST' &&
 				<Modal searchParams={{ modal }}>
@@ -40,13 +48,13 @@ const ProductsPage = async ({
 				</Modal>
 			}
 
-			<div>
+			<div className={styles['product-contsiner']}>
 				{products.map((product) => (
 					<AdminProduct key={product.id} product={product} />
 				))}
 			</div>
 
-		</div>
+		</main>
 	)
 }
 

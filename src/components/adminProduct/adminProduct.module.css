@@ -1,0 +1,19 @@
+.product-wrapper {
+	position: relative;
+}
+
+.button {
+	position: absolute;
+	right: 10px;
+	top: 10px
+}
+
+.edit-btn {
+	position: absolute;
+	bottom: -5px;
+	left: 25%;
+	padding: 8px 32px;
+	border-radius: var(--border-radius);
+	font-size: 1rem;
+	background-color: #B3DEC1;
+}

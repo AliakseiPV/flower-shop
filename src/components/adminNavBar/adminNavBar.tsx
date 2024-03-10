@@ -1,14 +1,19 @@
+"use client"
 import Link from 'next/link'
-import { FC } from 'react'
 import styles from './adminNavbar.module.css'
+import { usePathname } from 'next/navigation'
 
-const AdminNavBar: FC = () => {
+const AdminNavBar = () => {
+
+	const pathName = usePathname()
+
 	return (
-		<div>
+		<div className={styles['navbar-container']}>
 			<h1 className={styles.title}>Flower Home</h1>
-			<nav>
-				<Link href='/dashboard'>Dashboard</Link>
-				<Link href='/products'>Products</Link>
+			<nav className={styles['nav-wrapper']}>
+
+				<Link className={pathName === '/dashboard' ? styles.active : styles.link} href='/dashboard'>Dashboard</Link>
+				<Link className={pathName === '/products' ? styles.active : styles.link} href='/products'>Products</Link>
 			</nav>
 			<button>Logout</button>
 		</div>

@@ -6,18 +6,17 @@ import { useRouter } from "next/navigation"
 
 const Modal = ({
 	children,
-	searchParams
+	modalParams,
 }: {
 	children: ReactNode | undefined,
-	searchParams: { [key: string]: string | string[] | undefined }
+	modalParams: string | undefined
 }) => {
 
 	const router = useRouter()
-	const modal = searchParams.modal
 
 	return (
 		<div className={styles.modal} style={
-			modal === 'POST' || modal === 'PUT'
+			modalParams === 'POST' || modalParams === 'PUT' || modalParams === 'ACTIVE'
 				?
 				{ display: 'block' }
 				:

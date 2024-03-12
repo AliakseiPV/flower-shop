@@ -22,11 +22,21 @@ model User {
 }
 
 model Product {
-  id           Int      @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   title        String
   details      String
   description  String?
   price        Float?
   img          String[]
-  Availability Boolean  @default(false)
+  availability Boolean    @default(false)
+  type         String     @default("flower")
+  createdAt    DateTime   @default(now())
+  checkouts    Checkout[]
+}
+
+model Checkout {
+  id    String    @id @default(uuid())
+  name  String
+  phone String
+  order Product[]
 }

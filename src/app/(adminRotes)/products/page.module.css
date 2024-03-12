@@ -11,12 +11,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	font-size: 1rem;
 	padding: 1rem;
-}
-
-.title {
-	font-size: 1.5rem;
 }
 
 .product-contsiner {
@@ -25,4 +20,27 @@
 	grid-template-columns: repeat(4, auto);
 	justify-content: center;
 	gap: 5rem;
+}
+
+.filter-container {
+	display: flex;
+	align-items: center;
+	gap: 1rem
+}
+
+.search-container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+	justify-content: center;
+	width: 200px;
+	height: 35px;
+}
+
+.search-error {
+	position: absolute;
+	right: 0;
+	bottom: -20px;
+	color: red;
 }

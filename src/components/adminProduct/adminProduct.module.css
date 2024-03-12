@@ -3,9 +3,12 @@
 }
 
 .button {
+	border: none;
+	background-color: inherit;
 	position: absolute;
-	right: 10px;
-	top: 10px
+	top: 5px;
+	right: 5px;
+	color: red;
 }
 
 .edit-btn {

@@ -5,7 +5,6 @@ import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import type { productType } from '@/types/productType'
 
-
 const AdminForm = ({
 	productAction,
 	successMessage,
@@ -66,9 +65,13 @@ const AdminForm = ({
 						<input defaultValue={product?.details || ''} type="text" name='details' placeholder='Short description...' required />
 						<input defaultValue={product?.description || ''} type="text" name='description' placeholder='Description...' />
 						<input defaultValue={product?.price || ''} type="number" step="0.01" name='price' placeholder='Price' />
+						<select name="type">
+							<option value="flower">Flower</option>
+							<option value="bouquet">Bouquet</option>
+						</select>
 					</div>
 					<div>
-						{product?.Availability ?
+						{product?.availability ?
 							<input type="checkbox" name="availability" value="true" defaultChecked />
 							:
 							<input type="checkbox" name="availability" value="true" />

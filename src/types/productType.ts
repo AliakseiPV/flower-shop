@@ -5,5 +5,7 @@ export type productType = {
 	description: string | null;
 	price: number | null;
 	img: string[];
-	Availability: boolean;
+	availability: boolean;
+	type: string;
+	createdAt: Date;
 }

@@ -25,12 +25,13 @@ export const addProduct = async (formData: FormData) => {
 
 		await prisma.product.create({
 			data: {
-				title: data.title as string,
-				details: data.details as string,
-				description: data.description as string | null,
-				price: data.price as number | null,
-				img: images as string[],
-				Availability: data.availability as boolean
+				title: data.title,
+				details: data.details,
+				description: data.description,
+				price: data.price,
+				img: images,
+				availability: data.availability,
+				type: data.type
 			}
 		})
 	} catch (error) {
@@ -82,12 +83,13 @@ export const updateProduct = async (formData: FormData, product: productType) =>
 				id: product.id
 			},
 			data: {
-				title: data.title as string,
-				details: data.details as string,
-				description: data.description as string | null,
-				price: data.price as number | null,
-				img: dbImages as string[],
-				Availability: data.availability as boolean
+				title: data.title,
+				details: data.details,
+				description: data.description,
+				price: data.price,
+				img: dbImages,
+				availability: data.availability,
+				type: data.type
 			}
 		})
 
@@ -98,14 +100,13 @@ export const updateProduct = async (formData: FormData, product: productType) =>
 	revalidatePath('/products')
 }
 
-export const findProductById = async (productId: number) => {
-	let product = null
-	if (productId) {
-		product = await prisma.product.findUnique({
-			where: {
-				id: productId
-			}
-		})
-	}
-	return product
+export const getProductById = async (productId: number) => {
+	
+	if (!productId) { return null }
+
+	return await prisma.product.findUnique({
+		where: {
+			id: productId
+		}
+	})
 }

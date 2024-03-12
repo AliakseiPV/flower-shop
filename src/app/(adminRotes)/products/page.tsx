@@ -1,19 +1,31 @@
-import { addProduct, updateProduct, findProductById } from '@/actions/productActions'
-import { AdminForm, AdminProduct, Modal } from '@/components'
+import { addProduct, updateProduct, getProductById } from '@/actions/productActions'
+import { AdminForm, AdminProduct, Modal, SearchBar, Section } from '@/components'
 import { prisma } from '@/prisma'
 import Link from 'next/link'
 import styles from './page.module.css'
+import { filterProductByParams } from '@/utiles/sortProducts'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+
+const sortOptions = [
+	{ value: 'createdAt', name: 'Creation date' },
+	{ value: 'flower', name: 'Flowers' },
+	{ value: 'bouquet', name: 'Bouquets' },
+]
 
 const ProductsPage = async ({
 	searchParams }: {
 		searchParams: { [key: string]: string | string[] | undefined }
 	}) => {
 
-	const modal = searchParams.modal
+	const modal = searchParams.modal as string | undefined
+	const filter = searchParams.filter as string || 'createdAt'
 	const productId = Number(searchParams.id)
 
 	const products = await prisma.product.findMany()
-	const product = await findProductById(productId)
+	const product = await getProductById(productId)
+
+	const filteredProducts = filterProductByParams(products, filter)
 
 	return (
 		<main className={styles.main}>
@@ -26,11 +38,22 @@ const ProductsPage = async ({
 					Add new Product
 				</Link>
 
-				<div>Filter</div>
+				<div className={styles['filter-container']}>
+					<div className={styles['search-container']}>
+						{filteredProducts.error &&
+							<span className={styles['search-error']}>{filteredProducts.error}</span>
+						}
+						<SearchBar />
+					</div>
+
+					<Section filterParams={filter} options={sortOptions} />
+				</div>
+
+
 			</div>
 
 			{modal === 'POST' &&
-				<Modal searchParams={{ modal }}>
+				<Modal modalParams={modal}>
 					<AdminForm
 						productAction={addProduct}
 						successMessage={'Product added'}
@@ -39,7 +62,7 @@ const ProductsPage = async ({
 				</Modal>
 			}
 			{modal === 'PUT' &&
-				<Modal searchParams={{ modal }}>
+				<Modal modalParams={modal}>
 					<AdminForm
 						productAction={updateProduct}
 						successMessage={'Product updated'}
@@ -49,7 +72,7 @@ const ProductsPage = async ({
 			}
 
 			<div className={styles['product-contsiner']}>
-				{products.map((product) => (
+				{filteredProducts.array.map((product) => (
 					<AdminProduct key={product.id} product={product} />
 				))}
 			</div>

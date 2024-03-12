@@ -1,0 +1,23 @@
+.serch-bar {
+	position: relative;
+	display: flex;
+}
+
+.search-input {
+	height: 35px;
+	width: 200px;
+	padding: 10px;
+	border-radius: var(--border-radius);
+	border: none;
+	transition: all 1s ease-in-out;
+}
+
+.search-input:focus {
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+}
+
+.search-icon {
+	cursor: pointer;
+	color: var(--admin-active-btn);
+}

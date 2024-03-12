@@ -1,9 +1,11 @@
 import type { productType } from '@/types/productType';
 import Image from 'next/image'
+import Link from 'next/link';
 import { deleteProduct } from '@/actions/productActions';
 import { ActionButton } from '../actionButton';
-import Link from 'next/link';
-import style from './adminProduct.module.css'
+import style from './adminProduct.module.css';
+import { findExistingImg } from '@/utiles/findExistingImg';
+
 
 const AdminProduct = ({
 	product
@@ -12,32 +14,17 @@ const AdminProduct = ({
 }
 ) => {
 
-
-	const findImg = (product: productType) => {
-		let img = {
-			name: '',
-			id: 0 
-		} 
-		for (let i = 0; i < product.img.length; i++) {
-			if (product.img[i].length) {
-				img.name = product.img[i]
-				img.id = i
-				break
-			}
-		}
-		return img
-	}
-
-	const img = findImg(product)
+	const img = findExistingImg(product)
 
 	return (
 		<div className={style['product-wrapper']}>
+
 			<ActionButton
 				className={style.button}
 				product={product}
 				clickHandlerAction={deleteProduct}
 			>
-				delete
+				Delete
 			</ActionButton>
 			{
 				img.name
@@ -46,7 +33,10 @@ const AdminProduct = ({
 						src={`/images/${product.img[img.id]}`}
 						alt={product.title}
 						width={200}
-						height={250} />
+						height={250}
+						priority 
+					/>
+					
 					:
 					<div>No Image</div>
 			}

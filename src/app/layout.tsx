@@ -1,20 +1,25 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { Toaster } from "react-hot-toast"
+import "./globals.css"
+import '@fortawesome/fontawesome-svg-core/styles.css'
+import { config, library } from '@fortawesome/fontawesome-svg-core'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
-import "./globals.css";
-import { Toaster } from "react-hot-toast";
+config.autoAddCss = false
+library.add(faMagnifyingGlass)
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Цветочный Дом",
 	description: "Цветы Барановичи",
-};
+}
 
 export default function RootLayout({
 	children,
 }: Readonly<{
-	children: React.ReactNode;
+	children: React.ReactNode
 }>) {
 	return (
 		<html lang="en" >
@@ -23,5 +28,5 @@ export default function RootLayout({
 				<Toaster position="top-right" />
 			</body>
 		</html>
-	);
+	)
 }

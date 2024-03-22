@@ -1,3 +1,4 @@
+import { PublicNavBar } from "@/components";
 import type { PropsWithChildren } from "react";
 
 export default function PublicLayout({
@@ -5,7 +6,7 @@ export default function PublicLayout({
 }: PropsWithChildren<unknown>) {
 	return (
 		<div >
-			<h1>Public Layout</h1>
+			<PublicNavBar />
 			{children}
 		</div>
 	);

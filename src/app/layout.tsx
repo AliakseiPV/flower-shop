@@ -4,10 +4,10 @@ import { Toaster } from "react-hot-toast"
 import "./globals.css"
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config, library } from '@fortawesome/fontawesome-svg-core'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faTrash, faPlus, faX } from '@fortawesome/free-solid-svg-icons'
 
 config.autoAddCss = false
-library.add(faMagnifyingGlass)
+library.add(faMagnifyingGlass, faTrash, faPlus, faX)
 
 const inter = Inter({ subsets: ["latin"] });
 

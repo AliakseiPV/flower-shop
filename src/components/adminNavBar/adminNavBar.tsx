@@ -17,7 +17,7 @@ const AdminNavBar = () => {
 			</nav>
 			<button>Logout</button>
 		</div>
-	)
+	) 
 }
 
 export default AdminNavBar

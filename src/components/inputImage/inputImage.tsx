@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useState } from 'react'
 import Image from 'next/image'
+import styles from './inputImage.module.css'
 
 type inputImageType = {
 	imgSrc: string,
@@ -31,13 +32,15 @@ const InputImage = (props: inputImageType) => {
 				accept="image/png, image/jpeg"
 				hidden
 			/>
-			<div>
+			<div className={styles['img-container']}>
 				{image ?
 					<Image
 						src={image}
 						alt={'product-image'}
 						width={imgWidth}
 						height={imgHeight}
+						className={styles.img}
+						priority
 					/>
 					:
 					<span>Add Image</span>

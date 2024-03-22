@@ -32,21 +32,20 @@ const SearchBar = () => {
 			className={styles['serch-bar']}
 			onClick={() => setActive(false)}
 		>
-			{active
-				?
-				<FontAwesomeIcon
-					className={styles['search-icon']}
-					size='xl'
-					icon={faMagnifyingGlass}
-				/>
-				:
-				<input
-					onChange={(event) =>
-						router.push(`?filter=${event.target.value.toLowerCase()}`)
-					}
-					className={styles['search-input']}
-					type="text" placeholder="Search.." />
-			}
+			<FontAwesomeIcon
+				className={styles['search-icon']}
+				size='xl'
+				icon={faMagnifyingGlass}
+				style={active ? { display: 'block' } : { display: 'none' }}
+			/>
+			<input
+				onChange={(event) =>
+					router.push(`?filter=${event.target.value.toLowerCase()}`)
+				}
+				className={`${styles['search-input']} `}
+				type="text" placeholder="Search.."
+				style={active ? { display: 'none' } : { display: 'block' }}
+			/>
 		</label>
 	)
 }

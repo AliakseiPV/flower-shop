@@ -1,0 +1,10 @@
+.select {
+	height: 35px;
+	padding: 5px;
+	border-radius: var(--border-radius);
+	border: none;
+	color: black;
+	background-color: #fff;
+	font-size: 1rem;
+	box-shadow: 3px 3px 3px var(--admin-shadow);
+}

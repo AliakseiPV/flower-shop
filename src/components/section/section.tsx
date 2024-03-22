@@ -1,6 +1,7 @@
 "use client"
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import styles from './section.module.css'
 
 type option = {
 	name: string,
@@ -9,16 +10,17 @@ type option = {
 
 const Section = ({
 	options,
-	filterParams
 }: {
 	options: option[]
-	filterParams: string,
 }) => {
 
 	const router = useRouter()
+	const params = useSearchParams()
+	const filterParams= params.get('filter') as string
 
 	return (
 		<select
+			className={styles.select}
 			defaultValue={filterParams}
 			name="filter"
 		>

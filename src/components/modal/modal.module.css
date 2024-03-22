@@ -1,4 +1,7 @@
 .modal {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	position: fixed;
 	z-index: 1;
 	left: 0;
@@ -8,19 +11,22 @@
 	overflow: auto;
 	background-color: rgb(0, 0, 0);
 	background-color: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(10px);
 }
 
 .modal-content {
-	background-color: #ccc;
-	margin: 15% auto;
-	padding: 20px;
-	border: 1px solid black;
-	width: 80%;
+	background-color: #F0F0F0;
+	margin: 5% auto;
+	padding: 2.5rem;
+	border-radius: var(--border-radius);
+	width: fit-content;
 }
 
 .close {
-	color: red;
+	color: var(--btn-red);
 	float: right;
-	font-size: 28px;
 	font-weight: bold;
+	border: none;
+	background-color: inherit;
+	cursor: pointer;
 }

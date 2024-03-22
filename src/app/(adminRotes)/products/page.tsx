@@ -4,13 +4,15 @@ import { prisma } from '@/prisma'
 import Link from 'next/link'
 import styles from './page.module.css'
 import { filterProductByParams } from '@/utiles/sortProducts'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const sortOptions = [
 	{ value: 'createdAt', name: 'Creation date' },
 	{ value: 'flower', name: 'Flowers' },
 	{ value: 'bouquet', name: 'Bouquets' },
+	{ value: 'available', name: 'Avalilable' },
+	{ value: 'notAvailable', name: 'Not Available' }
 ]
 
 const ProductsPage = async ({
@@ -34,7 +36,9 @@ const ProductsPage = async ({
 
 				<Link
 					href={`?modal=POST`}
+					className={styles['add-btn']}
 				>
+					<FontAwesomeIcon icon="plus" size="lg" style={{ color: "#008000", }} />
 					Add new Product
 				</Link>
 
@@ -46,23 +50,23 @@ const ProductsPage = async ({
 						<SearchBar />
 					</div>
 
-					<Section filterParams={filter} options={sortOptions} />
+					<Section options={sortOptions} />
 				</div>
 
 
 			</div>
 
 			{modal === 'POST' &&
-				<Modal modalParams={modal}>
+				<Modal>
 					<AdminForm
 						productAction={addProduct}
 						successMessage={'Product added'}
 						product={null}
 					/>
 				</Modal>
-			}
+			} 
 			{modal === 'PUT' &&
-				<Modal modalParams={modal}>
+				<Modal>
 					<AdminForm
 						productAction={updateProduct}
 						successMessage={'Product updated'}

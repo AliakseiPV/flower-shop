@@ -42,5 +42,19 @@
 	position: absolute;
 	right: 0;
 	bottom: -20px;
-	color: red;
+	color: var(--btn-red)
+}
+
+.add-btn {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	color: black;
+	width: fit-content;
+	padding: 10px;
+	background-color: var(--btn-green);
+	border-radius: var(--border-radius);
+	box-shadow: 3px 3px 3px var(--admin-shadow);
 }

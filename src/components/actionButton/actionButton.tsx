@@ -1,17 +1,14 @@
 "use client"
 
-import type { productType } from "@/types/productType"
 import { ReactNode } from "react"
 import { toast } from "react-hot-toast"
 
 const ActionButton = async ({
-	product,
-	clickHandlerAction,
+	clickAction,
 	children,
 	className,
 }: {
-	product: productType,
-	clickHandlerAction: Function
+		clickAction: Function
 	children: ReactNode | undefined,
 	className: string | undefined
 }
@@ -20,8 +17,8 @@ const ActionButton = async ({
 	return (
 		<button
 			className={className}
-			onClick={async () => {
-				const result = await clickHandlerAction(product)
+			onClick={() => {
+				const result = clickAction()
 				if (result?.error) {
 					toast.error(result.error)
 				} else {

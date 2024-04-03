@@ -64,7 +64,7 @@ const ProductsPage = async ({
 						product={null}
 					/>
 				</Modal>
-			} 
+			}
 			{modal === 'PUT' &&
 				<Modal>
 					<AdminForm
@@ -77,7 +77,7 @@ const ProductsPage = async ({
 
 			<div className={styles['product-contsiner']}>
 				{filteredProducts.array.map((product) => (
-					<AdminProduct key={product.id} product={product} />
+					<AdminProduct modal={modal} key={product.id} product={product} />
 				))}
 			</div>
 

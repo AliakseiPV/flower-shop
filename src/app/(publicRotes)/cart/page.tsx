@@ -1,24 +1,30 @@
-import { checkoutAction } from "@/actions/checkoutAction"
-import { ActionButton, CartList } from "@/components"
-import { Context } from "@/context/cartContext"
-import { useContext } from "react"
+import {  CartForm, CartList, Modal } from "@/components"
+import Link from "next/link"
 
-const CartPage = () => {
 
+const CartPage = ({
+	searchParams }: {
+		searchParams: { [key: string]: string | string[] | undefined }
+	}) => {
+
+	const modal = searchParams.modal as string | undefined
 
 	return (
 		<div>
 			<CartList />
 
-			{/* <ActionButton
-				clickAction={async () => {
-					// await checkoutAction()
-				}}
-				className={undefined}
-				successMessage={""}
+			{modal === 'ACTIVE' &&
+				<Modal >
+					<CartForm />
+				</Modal>
+			}
+
+			<Link
+				href={`?modal=ACTIVE`}
 			>
 				Checkout
-			</ActionButton> */}
+			</Link>
+
 		</div>
 	)
 }

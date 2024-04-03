@@ -6,12 +6,16 @@ import { ActionButton } from '../actionButton'
 import style from './adminProduct.module.css'
 import { findExistingImg } from '@/utiles/findExistingImg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Modal } from '../modal'
+import BackButton from '../backButton/backButton'
 
 
 const AdminProduct = ({
-	product
+	product,
+	modal
 }: {
 	product: productType,
+	modal: string | undefined
 }
 ) => {
 
@@ -20,16 +24,29 @@ const AdminProduct = ({
 	return (
 		<div className={style['product-wrapper']}>
 
-			<ActionButton
+			{modal === 'ACTIVE' &&
+				<Modal>
+					<BackButton>
+						<ActionButton
+							className={undefined}
+							clickAction={async () => {
+								'use server'
+								await deleteProduct(product)
+							}}
+							successMessage='Product deleted'
+						>
+							Delete Product
+						</ActionButton>
+					</BackButton>
+				</Modal>
+			}
+
+			<Link
+				href={`?modal=ACTIVE`}
 				className={style.button}
-				clickAction={async () => {
-					'use server'
-					await deleteProduct(product)
-				}}
-				successMessage='Product deleted'
 			>
-				<FontAwesomeIcon icon="trash" size="xl" style={{ color: "#DD5959", cursor: "pointer" }} />
-			</ActionButton>
+				<FontAwesomeIcon icon="trash" size="lg" style={{ color: "#DD5959", cursor: "pointer" }} />
+			</Link>
 
 			{
 				img.name

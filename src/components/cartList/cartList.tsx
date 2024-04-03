@@ -5,9 +5,8 @@ import { useContext } from "react"
 import { checkoutAction } from "@/actions/checkoutAction"
 import toast from "react-hot-toast"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faX } from '@fortawesome/free-solid-svg-icons'
+import { faX, faMinus } from '@fortawesome/free-solid-svg-icons'
 import { ActionButton } from "../actionButton"
-import { Modal } from "../modal"
 
 
 const CartList = () => {
@@ -45,23 +44,12 @@ const CartList = () => {
 						clickAction={() => handleRemoveOneFromCart(product.data)}
 						className={undefined}
 						successMessage={`${product.data.title} sucsessfully deleted`}>
-						Remove
+						<FontAwesomeIcon icon={faMinus} />
 					</ActionButton>
 
 				</div>
 
 			))}
-
-			{/* <form
-				action={formAction}
-			>
-
-				<input type="text" name="name" placeholder="Name..." required />
-				<input type="email" name="email" placeholder="Email..." required />
-				<input type="number" name="phone" placeholder="Phone number..." required />
-
-				<button>Checkout</button>
-			</form> */}
 
 		</div>
 	)

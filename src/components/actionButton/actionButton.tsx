@@ -3,7 +3,7 @@
 import { ReactNode } from "react"
 import { toast } from "react-hot-toast"
 
-const ActionButton = async ({
+const ActionButton = ({
 	clickAction,
 	children,
 	className,

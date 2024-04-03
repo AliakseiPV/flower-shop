@@ -6,7 +6,7 @@ import { checkoutAction } from "@/actions/checkoutAction"
 import toast from "react-hot-toast"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faX } from '@fortawesome/free-solid-svg-icons'
-
+import { ActionButton } from "../actionButton"
 
 
 const CartList = () => {
@@ -30,20 +30,23 @@ const CartList = () => {
 
 				<div key={product.data.id}>
 
-					<button
-						onClick={() => handleRemoveAllFromCart(product.data)}
-					>
-						<FontAwesomeIcon icon={faX} size="lg"/>
-					</button>
+					<ActionButton
+						clickAction={() => handleRemoveAllFromCart(product.data)}
+						className={undefined}
+						successMessage={`${product.data.title} sucsessfully deleted`}>
+						<FontAwesomeIcon icon={faX} size="lg" />
+					</ActionButton>
+
 					<h2>{product.data.title}</h2>
 					<span>Quantity{product.quantity}</span>
 
-
-					<button
-						onClick={() => handleRemoveOneFromCart(product.data)}
-					>
+					<ActionButton
+						clickAction={() => handleRemoveOneFromCart(product.data)}
+						className={undefined}
+						successMessage={`${product.data.title} sucsessfully deleted`}>
 						Remove
-					</button>
+					</ActionButton>
+
 				</div>
 
 			))}

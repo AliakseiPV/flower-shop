@@ -4,6 +4,7 @@ import { Context } from "@/context/cartContext"
 import type { productType } from "@/types/productType"
 import { useContext } from "react"
 import toast from "react-hot-toast"
+import { ActionButton } from "../actionButton"
 
 
 const Product = ({
@@ -15,18 +16,13 @@ const Product = ({
 	return (
 		<div>
 
-			<button
-				onClick={() => {
-					const result = handleAddToCart(product)
-					if (result?.error) {
-						toast.error(result.error)
-					} else {
-						toast.success('Product added to cart')
-					}
-				}}
+			<ActionButton
+				clickAction={() => handleAddToCart(product)}
+				className={undefined}
+				successMessage={"Product added to cart"}
 			>
 				Add to Cart
-			</button>
+			</ActionButton>
 		</div>
 	)
 }

@@ -7,6 +7,7 @@ import toast from "react-hot-toast"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faX } from '@fortawesome/free-solid-svg-icons'
 import { ActionButton } from "../actionButton"
+import { Modal } from "../modal"
 
 
 const CartList = () => {
@@ -51,7 +52,7 @@ const CartList = () => {
 
 			))}
 
-			<form
+			{/* <form
 				action={formAction}
 			>
 
@@ -60,7 +61,7 @@ const CartList = () => {
 				<input type="number" name="phone" placeholder="Phone number..." required />
 
 				<button>Checkout</button>
-			</form>
+			</form> */}
 
 		</div>
 	)

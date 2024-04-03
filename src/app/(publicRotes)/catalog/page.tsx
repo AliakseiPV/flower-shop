@@ -1,4 +1,5 @@
-import { FC } from 'react'
+import { PublicProduct } from "@/components";
+import { prisma } from "@/prisma";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,9 +7,18 @@ export const metadata: Metadata = {
 	description: "Цветы Барановичи | Букеты | Цветочные композиции",
 };
 
-const CatalogPage: FC = () => {
+const CatalogPage = async () => {
+
+	const products = await prisma.product.findMany()
+
 	return (
-		<div>Catalog</div>
+		<div>
+
+			{products.map(product => (
+				<PublicProduct key={product.id} product={product} />
+			))}
+
+		</div>
 	)
 }
 

@@ -26,6 +26,7 @@ const AdminProduct = ({
 					'use server'
 					await deleteProduct(product)
 				}}
+				successMessage='Product deleted'
 			>
 				<FontAwesomeIcon icon="trash" size="xl" style={{ color: "#DD5959", cursor: "pointer" }} />
 			</ActionButton>

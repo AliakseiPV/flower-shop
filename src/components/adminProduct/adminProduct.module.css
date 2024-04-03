@@ -13,7 +13,7 @@
 
 .button {
 	border: none;
-	background-color: inherit;
+	background-color: transparent;
 	position: absolute;
 	top: 10px;
 	right: 10px;

@@ -22,21 +22,33 @@ model User {
 }
 
 model Product {
-  id           Int        @id @default(autoincrement())
-  title        String
-  details      String
-  description  String?
-  price        Float?
-  img          String[]
-  availability Boolean    @default(false)
-  type         String     @default("flower")
-  createdAt    DateTime   @default(now())
-  checkouts    Checkout[]
+  id                Int                 @id @default(autoincrement())
+  title             String
+  details           String
+  description       String?
+  price             Float
+  img               String[]
+  availability      Boolean             @default(false)
+  type              String              @default("flower")
+  createdAt         DateTime            @default(now())
+  CheckoutOnProduct CheckoutOnProduct[]
 }
 
 model Checkout {
-  id    String    @id @default(uuid())
-  name  String
-  phone String
-  order Product[]
+  id                String              @id @default(uuid())
+  name              String
+  phone             String
+  email             String
+  CheckoutOnProduct CheckoutOnProduct[]
+}
+
+model CheckoutOnProduct {
+  product          Product  @relation(fields: [productId], references: [id])
+  productId        Int
+  checkout         Checkout @relation(fields: [checkoutId], references: [id])
+  checkoutId       String
+  checkoutAt       DateTime @default(now())
+  checkoutQuantity Int
+
+  @@id([productId, checkoutId])
 }

@@ -7,10 +7,12 @@ const ActionButton = async ({
 	clickAction,
 	children,
 	className,
+	successMessage
 }: {
-		clickAction: Function
+	clickAction: Function
 	children: ReactNode | undefined,
 	className: string | undefined
+	successMessage: string
 }
 ) => {
 
@@ -22,7 +24,7 @@ const ActionButton = async ({
 				if (result?.error) {
 					toast.error(result.error)
 				} else {
-					toast.success("Product deleted")
+					toast.success(successMessage)
 				}
 			}}
 		>

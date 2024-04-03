@@ -1,8 +1,25 @@
-import { FC } from 'react'
+import { checkoutAction } from "@/actions/checkoutAction"
+import { ActionButton, CartList } from "@/components"
+import { Context } from "@/context/cartContext"
+import { useContext } from "react"
 
-const CartPage: FC = () => {
+const CartPage = () => {
+
+
 	return (
-		<div>Cart</div>
+		<div>
+			<CartList />
+
+			{/* <ActionButton
+				clickAction={async () => {
+					// await checkoutAction()
+				}}
+				className={undefined}
+				successMessage={""}
+			>
+				Checkout
+			</ActionButton> */}
+		</div>
 	)
 }
 

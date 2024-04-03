@@ -9,3 +9,9 @@ export type productType = {
 	type: string;
 	createdAt: Date;
 }
+
+export type cartItem = {
+	data: productType;
+	quantity: number;
+}
+

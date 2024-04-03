@@ -5,12 +5,12 @@ import { revalidatePath } from 'next/cache'
 import { productType } from '@/types/productType'
 import { deleteImage, uploadImage } from './fileActions'
 import { getErrorMessage } from '@/utiles/getErrorMessage'
-import { getFormData } from '@/utiles/getFormData'
+import { getAdminFormData } from '@/utiles/getFormData'
 
 
 export const addProduct = async (formData: FormData) => {
 	try {
-		const data = getFormData(formData)
+		const data = getAdminFormData(formData)
 		const images: string[] = new Array(4)
 
 		for (let i = 0; i < images.length; i++) {
@@ -46,11 +46,17 @@ export const deleteProduct = async (product: productType) => {
 		product.img.forEach(async img => {
 			await deleteImage(img)
 		})
+		await prisma.checkoutOnProduct.deleteMany({
+			where: {
+				productId: product.id
+			}
+		})
 		await prisma.product.delete({
 			where: {
 				id: product.id
 			}
 		})
+
 	} catch (error) {
 		return { error: getErrorMessage(error) }
 	}
@@ -60,7 +66,7 @@ export const deleteProduct = async (product: productType) => {
 
 export const updateProduct = async (formData: FormData, product: productType) => {
 	try {
-		const data = getFormData(formData)
+		const data = getAdminFormData(formData)
 		const dbImages = product.img
 
 		for (let i = 0; i < dbImages.length; i++) {
@@ -101,7 +107,7 @@ export const updateProduct = async (formData: FormData, product: productType) =>
 }
 
 export const getProductById = async (productId: number) => {
-	
+
 	if (!productId) { return null }
 
 	return await prisma.product.findUnique({

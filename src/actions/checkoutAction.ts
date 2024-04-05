@@ -1,7 +1,7 @@
 'use server'
 
 import { prisma } from "@/prisma";
-import { cartItem } from "@/types/productType";
+import { cartItem, productType } from "@/types/productType";
 import { getErrorMessage } from "@/utiles/getErrorMessage";
 import { getCartFormData } from "@/utiles/getFormData";
 
@@ -42,6 +42,8 @@ export const checkoutAction = async (products: cartItem[], formData: FormData) =
 				name: data.name,
 				phone: data.phone,
 				email: data.email,
+				deliveryDate: data.deliveryDate,
+				comment: data.comment,
 				CheckoutOnProduct: {
 					create: createCheckoutProducts(products)
 				}
@@ -51,5 +53,34 @@ export const checkoutAction = async (products: cartItem[], formData: FormData) =
 	} catch (error) {
 		return { error: getErrorMessage(error) }
 	}
+}
+
+export const getCheckoutProducts = async (checkoutId: string) => {
+
+	let products: {
+		quantity: number,
+		checkoutDate: Date,
+		product: productType | null
+	}[] = []
+
+	const checkoutOnProduct = await prisma.checkoutOnProduct.findMany({
+		where: {
+			checkoutId: checkoutId
+		}
+	})
+
+	checkoutOnProduct.forEach(async (element) => {
+		products.push({
+			quantity: element.checkoutQuantity,
+			checkoutDate: element.checkoutAt,
+			product: await prisma.product.findFirst({
+				where: {
+					id: element.productId
+				}
+			})
+		})
+	})
+
+	return products
 
 }

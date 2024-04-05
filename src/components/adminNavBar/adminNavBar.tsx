@@ -9,7 +9,12 @@ const AdminNavBar = () => {
 
 	return (
 		<div className={styles['navbar-container']}>
-			<h1 className={styles.title}>Flower Home</h1>
+			<Link
+				href={'/'}
+				className={styles.title}
+			>
+				Flower Home
+			</Link>
 			<nav className={styles['nav-wrapper']}>
 
 				<Link className={pathName === '/dashboard' ? styles.active : styles.link} href='/dashboard'>Dashboard</Link>

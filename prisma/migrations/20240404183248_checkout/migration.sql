@@ -2,13 +2,15 @@
   Warnings:
 
   - You are about to drop the column `Availability` on the `Product` table. All the data in the column will be lost.
+  - Made the column `price` on table `Product` required. This step will fail if there are existing NULL values in that column.
 
 */
 -- AlterTable
 ALTER TABLE "Product" DROP COLUMN "Availability",
 ADD COLUMN     "availability" BOOLEAN NOT NULL DEFAULT false,
 ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "type" TEXT NOT NULL DEFAULT 'flower';
+ADD COLUMN     "type" TEXT NOT NULL DEFAULT 'flower',
+ALTER COLUMN "price" SET NOT NULL;
 
 -- CreateTable
 CREATE TABLE "Checkout" (
@@ -16,6 +18,8 @@ CREATE TABLE "Checkout" (
     "name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "comment" TEXT,
+    "deliveryDate" TEXT NOT NULL,
 
     CONSTRAINT "Checkout_pkey" PRIMARY KEY ("id")
 );

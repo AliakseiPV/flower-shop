@@ -22,11 +22,15 @@ export const getCartFormData = (FormData: FormData) => {
 	const data: {
 		name: string,
 		phone: string,
-		email: string
+		email: string,
+		deliveryDate: string,
+		comment: string | null
 	} = {
 		name: FormData.get('name') as string,
 		phone: FormData.get('phone') as string,
-		email: FormData.get('email') as string
+		email: FormData.get('email') as string,
+		deliveryDate: FormData.get('date') as string,
+		comment: FormData.get('comment') as string | null
 	}
 
 	return data

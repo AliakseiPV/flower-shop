@@ -39,6 +39,10 @@ model Checkout {
   name              String
   phone             String
   email             String
+  comment           String?
+  deliveryDate      String
+  createdAt         DateTime            @default(now())
+  status            Boolean             @default(false)
   CheckoutOnProduct CheckoutOnProduct[]
 }
 

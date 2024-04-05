@@ -19,7 +19,7 @@ const Product = ({
 			<ActionButton
 				clickAction={() => handleAddToCart(product)}
 				className={undefined}
-				successMessage={"Product added to cart"}
+				successMessage={`${product?.title} added to cart`}
 			>
 				Add to Cart
 			</ActionButton>

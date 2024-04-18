@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Checkout" ALTER COLUMN "status" SET DEFAULT 'EXCEPTED',
+ALTER COLUMN "status" SET DATA TYPE TEXT;

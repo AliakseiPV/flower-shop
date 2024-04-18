@@ -42,7 +42,7 @@ model Checkout {
   comment           String?
   deliveryDate      String
   createdAt         DateTime            @default(now())
-  status            Boolean             @default(false)
+  status            String             @default("EXCEPTED")
   CheckoutOnProduct CheckoutOnProduct[]
 }
 

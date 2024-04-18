@@ -1,4 +1,4 @@
-import { ProductList, PublicProduct, SearchBar, Section } from "@/components";
+import { ProductList, PublicProduct, SearchBar, FilterSection } from "@/components";
 import FilterContext from "@/context/filterContext";
 import { prisma } from "@/prisma";
 import type { Metadata } from "next";
@@ -29,7 +29,7 @@ const CatalogPage = async () => {
 					<div>
 						<SearchBar products={products} />
 					</div>
-					<Section options={sortOptions} />
+					<FilterSection options={sortOptions} />
 				</div>
 
 				<ProductList products={products} />

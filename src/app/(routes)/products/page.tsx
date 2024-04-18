@@ -1,5 +1,5 @@
 import { addProduct, updateProduct, getProductById } from '@/actions/productActions'
-import { AdminForm, Modal, ProductList, SearchBar, Section } from '@/components'
+import { AdminForm, Modal, ProductList, SearchBar, FilterSection } from '@/components'
 import { prisma } from '@/prisma'
 import Link from 'next/link'
 import styles from './page.module.css'
@@ -66,7 +66,7 @@ const ProductsPage = async ({
 					<div className={styles['search-container']}>
 						<SearchBar products={products} />
 					</div>
-					<Section options={sortOptions} />
+					<FilterSection options={sortOptions} />
 				</div>
 
 				<ProductList products={products} />

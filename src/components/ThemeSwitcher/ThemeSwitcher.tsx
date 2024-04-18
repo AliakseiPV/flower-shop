@@ -7,34 +7,28 @@ import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 
 const ThemeSwitcher = () => {
-
-	// const [mounted, setMounted] = useState(false)
-	const [isSelected, setIsSelected] = useState(true)
 	const { theme, setTheme } = useTheme()
+	const [isSelected, setIsSelected] = useState(true)
 
-	// useEffect(() => {
-	// 	setMounted(true)
-	// }, [])
+	useEffect(() => {
+		if (theme === 'light') setIsSelected(true)
+		if (theme === 'dark') setIsSelected(false)
+	}, [])
 
-	// if (!mounted) return null
 
 	return (
 		<Switch
-			defaultSelected
 			isSelected={isSelected}
 			onValueChange={() => {
 				if (isSelected) {
 					setIsSelected(false)
 					setTheme('dark')
 				}
-
 				if (!isSelected) {
 					setIsSelected(true)
 					setTheme('light')
 				}
-
 			}}
-
 			size="sm"
 			color='secondary'
 			thumbIcon={({ isSelected, className }) =>

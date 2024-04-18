@@ -112,7 +112,7 @@ const CartContext = ({ children }: PropsWithChildren<unknown>) => {
 
 	const handleClearCart = () => {
 		setCartItems(initialContext.cartItems)
-		localStorage.clear()
+		localStorage.removeItem("cart")
 	}
 
 	const getCartCount = () => {

@@ -15,7 +15,7 @@ export type cartItem = {
 	quantity: number;
 }
 
-export type checkout = {
+export type checkoutType = {
 	id: string;
 	name: string;
 	phone: string;

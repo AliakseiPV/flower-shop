@@ -9,7 +9,7 @@ type option = {
 	value: string
 }
 
-const Section = ({
+const FilterSection = ({
 	options,
 }: {
 	options: option[]
@@ -43,4 +43,4 @@ const Section = ({
 	)
 }
 
-export default Section
+export default FilterSection

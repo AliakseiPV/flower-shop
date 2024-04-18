@@ -97,5 +97,4 @@ export const updateCheckoutStatus = async (checkoutId: string, value: string) =>
 	} catch (error) {
 		return { error: getErrorMessage(error) }
 	}
-
 }

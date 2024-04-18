@@ -83,3 +83,19 @@ export const getCheckoutProducts = async (checkoutId: string) => {
 	return products
 
 }
+
+export const updateCheckoutStatus = async (checkoutId: string, value: string) => {
+	try {
+		await prisma.checkout.update({
+			where: {
+				id: checkoutId
+			},
+			data: {
+				status: value
+			}
+		})
+	} catch (error) {
+		return { error: getErrorMessage(error) }
+	}
+
+}

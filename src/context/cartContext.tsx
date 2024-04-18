@@ -2,11 +2,12 @@
 
 import { createContext, useEffect, useState } from 'react'
 import type { PropsWithChildren } from "react"
-import type { cartItem, productType } from '@/types/productType'
+import type { cartItem, productType } from '@/types/types'
 import { getErrorMessage } from '@/utiles/getErrorMessage'
 
 type Context = {
 	cartItems: cartItem[],
+	getCartCount: Function
 	handleAddToCart: Function,
 	handleRemoveOneFromCart: Function,
 	handleRemoveAllFromCart: Function,
@@ -15,6 +16,9 @@ type Context = {
 
 const initialContext: Context = {
 	cartItems: [],
+	getCartCount: () => {
+		throw new Error('GetCartCount function must be overridden');
+	}, 
 	handleAddToCart: () => {
 		throw new Error('AddToCart function must be overridden');
 	},
@@ -33,7 +37,7 @@ export const Context = createContext<Context>(initialContext)
 
 const CartContext = ({ children }: PropsWithChildren<unknown>) => {
 
-	const [cartItems, setCartItems] = useState<cartItem[]>([])
+	const [cartItems, setCartItems] = useState<cartItem[]>(initialContext.cartItems)
 
 	useEffect(() => {
 		const cartValues = localStorage.getItem('cart')
@@ -107,12 +111,21 @@ const CartContext = ({ children }: PropsWithChildren<unknown>) => {
 	}
 
 	const handleClearCart = () => {
-		setCartItems([])
+		setCartItems(initialContext.cartItems)
 		localStorage.clear()
 	}
 
+	const getCartCount = () => {
+		let count = 0
+		cartItems.forEach(element => {
+			count += element.quantity
+		})
+
+		return count
+	}
+
 	return (
-		<Context.Provider value={{ cartItems, handleAddToCart, handleRemoveOneFromCart, handleRemoveAllFromCart, handleClearCart }} >
+		<Context.Provider value={{ cartItems, getCartCount, handleAddToCart, handleRemoveOneFromCart, handleRemoveAllFromCart, handleClearCart }} >
 			{children}
 		</Context.Provider>
 	)

@@ -4,10 +4,13 @@ import { Toaster } from "react-hot-toast"
 import "./globals.css"
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config, library } from '@fortawesome/fontawesome-svg-core'
-import { faMagnifyingGlass, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { Providers } from "@/provider/providers"
+import { NavBar } from "@/components"
+import CartContext from "@/context/cartContext"
 
 config.autoAddCss = false
-library.add(faMagnifyingGlass, faTrash, faPlus)
+library.add(faMagnifyingGlass, faPlus)
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,9 +25,16 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang="en" >
+		<html lang="en" suppressHydrationWarning>
 			<body className={inter.className}>
-				{children}
+				<Providers>
+					<CartContext>
+						<main>
+							<NavBar />
+							{children}
+						</main>
+					</CartContext>
+				</Providers>
 				<Toaster position="top-right" />
 			</body>
 		</html>

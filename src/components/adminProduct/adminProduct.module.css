@@ -1,36 +1,15 @@
 .product-wrapper {
 	position: relative;
-	width: 200px;
-	height: 250px;
+	width: 170px;
+	height: 200px;
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	background-color: var(--admin-input);
-	border-radius: var(--border-radius);
+	background-color: transparent;
+	border-radius: 12px;
 	box-shadow: 5px 5px 5px var(--admin-shadow);
 	font-size: 1.5rem;
 }
 
-.button {
-	border: none;
-	background-color: transparent;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	color: red;
-}
-
 .img {
-	border-radius: var(--border-radius);
-}
-
-.edit-btn {
-	position: absolute;
-	font-weight: 700;
-	bottom: 10px;
-	left: 25%;
-	padding: 8px 32px;
-	border-radius: var(--border-radius);
-	font-size: 1rem;
-	background-color: #B3DEC1;
+	border-radius: 12px;
 }

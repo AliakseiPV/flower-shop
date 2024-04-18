@@ -3,7 +3,7 @@
 import { InputImage } from '../inputImage'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-import type { productType } from '@/types/productType'
+import type { productType } from '@/types/types'
 import styles from './adminForm.module.css'
 
 const AdminForm = ({

@@ -1,0 +1,55 @@
+.main {
+	background-color: var(--admin-background);
+	height: 100vh;
+	width: 100%;
+	padding-left: 12rem;
+}
+
+.header {
+	color: #fff;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem;
+}
+
+
+.filter-container {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: end;
+	gap: 1rem;
+	padding: 0 1rem;
+}
+
+.search-container {
+	display: flex;
+
+	align-items: center;
+	justify-content: center;
+	width: 250px;
+	height: 35px;
+}
+
+.search-error {
+	position: absolute;
+	left: 0;
+	bottom: -35px;
+	color: var(--btn-red)
+}
+
+.add-btn {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	color: black;
+	width: fit-content;
+	padding: 10px;
+	background-color: var(--btn-green);
+	border-radius: var(--border-radius);
+	box-shadow: 3px 3px 3px var(--admin-shadow);
+}

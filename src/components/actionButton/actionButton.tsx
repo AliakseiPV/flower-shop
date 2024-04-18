@@ -1,5 +1,6 @@
 "use client"
 
+import { Button } from "@nextui-org/react"
 import { ReactNode } from "react"
 import { toast } from "react-hot-toast"
 
@@ -17,7 +18,7 @@ const ActionButton = ({
 ) => {
 
 	return (
-		<button
+		<Button
 			className={className}
 			onClick={() => {
 				const result = clickAction()
@@ -29,7 +30,7 @@ const ActionButton = ({
 			}}
 		>
 			{children}
-		</button>
+		</Button>
 	)
 }
 

@@ -1,4 +1,6 @@
-import type { productType } from '@/types/productType'
+'use client'
+
+import type { productType } from '@/types/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { deleteProduct } from '@/actions/productActions'
@@ -7,45 +9,47 @@ import style from './adminProduct.module.css'
 import { findExistingImg } from '@/utiles/findExistingImg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Modal } from '../modal'
-import BackButton from '../backButton/backButton'
-
+import { useRouter, useSearchParams } from 'next/navigation'
+import { faEraser, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { Button } from '@nextui-org/react'
 
 const AdminProduct = ({
 	product,
-	modal
 }: {
 	product: productType,
-	modal: string | undefined
 }
 ) => {
 
 	const img = findExistingImg(product)
+	const searchParams = useSearchParams()
+	const router = useRouter()
+	const modal = searchParams.get('modal')
 
 	return (
 		<div className={style['product-wrapper']}>
 
-			{modal === 'ACTIVE' &&
+			{
+				modal === 'ACTIVE' &&
 				<Modal>
-					<BackButton>
-						<ActionButton
-							className={undefined}
-							clickAction={async () => {
-								'use server'
-								await deleteProduct(product)
-							}}
-							successMessage='Product deleted'
-						>
-							Delete Product
-						</ActionButton>
-					</BackButton>
+					<ActionButton
+						clickAction={async () => {
+							router.back()
+							return await deleteProduct(product)
+						}}
+						className={style.img}
+						successMessage={'Product deleted'}
+					>
+						<FontAwesomeIcon icon={faEraser} />
+						Delete Product
+					</ActionButton>
 				</Modal>
 			}
 
 			<Link
 				href={`?modal=ACTIVE`}
-				className={style.button}
+				className="border-none bg-transparent absolute right-2 top-0 text-red-500 cursor-pointer"
 			>
-				<FontAwesomeIcon icon="trash" size="lg" style={{ color: "#DD5959", cursor: "pointer" }} />
+				<FontAwesomeIcon icon={faTrash} size="sm" />
 			</Link>
 
 			{
@@ -53,22 +57,27 @@ const AdminProduct = ({
 					?
 					<Image
 						src={`/images/${product.img[img.id]}`}
-						className={style.img}
+						className="rounded-xl"
 						alt={product.title}
-						width={200}
-						height={250}
+						width={170}
+						height={200}
 						priority
 					/>
 					:
 					<span>No Image</span>
 			}
 
-			<Link
-				className={style['edit-btn']}
+			<Button
 				href={`?id=${product.id}&modal=PUT`}
+				as={Link}
+				color="success"
+				className='absolute flex align-middle bottom-0 bg-green-200  font-semibold  px-5'
+				variant="solid"
 			>
 				Edit
-			</Link>
+				<FontAwesomeIcon icon={faPenToSquare} />
+			</Button>
+
 		</div>
 	)
 }

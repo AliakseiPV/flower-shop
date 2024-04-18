@@ -5,24 +5,12 @@ import { useContext } from "react"
 import { checkoutAction } from "@/actions/checkoutAction"
 import toast from "react-hot-toast"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faX, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faEraser } from '@fortawesome/free-solid-svg-icons'
 import { ActionButton } from "../actionButton"
-
 
 const CartList = () => {
 
-	const { cartItems, handleRemoveOneFromCart, handleRemoveAllFromCart, handleClearCart } = useContext(Context)
-
-	const formAction = async (formData: FormData) => {
-		const result = await checkoutAction(cartItems, formData)
-		if (result?.error) {
-			toast.error(result.error)
-		} else {
-			handleClearCart()
-
-			toast.success('Checkout successfull')
-		}
-	}
+	const { cartItems, handleRemoveOneFromCart, handleRemoveAllFromCart } = useContext(Context)
 
 	return (
 		<div>
@@ -32,9 +20,10 @@ const CartList = () => {
 
 					<ActionButton
 						clickAction={() => handleRemoveAllFromCart(product.data)}
-						className={undefined}
+						className="bg-red-500 font-semibold"
 						successMessage={`${product.data.title} sucsessfully deleted`}>
-						<FontAwesomeIcon icon={faX} size="lg" />
+						<FontAwesomeIcon icon={faEraser} />
+						Remove
 					</ActionButton>
 
 					<h2>{product.data.title}</h2>
@@ -42,11 +31,10 @@ const CartList = () => {
 
 					<ActionButton
 						clickAction={() => handleRemoveOneFromCart(product.data)}
-						className={undefined}
+						className="bg-red-500 font-semibold rounded-full"
 						successMessage={`${product.data.title} sucsessfully deleted`}>
 						<FontAwesomeIcon icon={faMinus} />
 					</ActionButton>
-
 				</div>
 
 			))}

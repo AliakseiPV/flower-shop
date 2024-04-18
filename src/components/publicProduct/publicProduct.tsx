@@ -1,4 +1,4 @@
-import type { productType } from "@/types/productType"
+import type { productType } from "@/types/types"
 import { findExistingImg } from "@/utiles/findExistingImg"
 import Image from 'next/image'
 import Link from "next/link"

@@ -1,52 +1,70 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import styles from './searchBar.module.css'
-import { useRouter } from 'next/navigation'
+import { Input } from '@nextui-org/react'
+import { filterProductByParams } from '@/utiles/sortProducts'
+import { productType } from '@/types/types'
+import { Context } from '@/context/filterContext'
 
 
-const SearchBar = () => {
 
-	useEffect(() => {
-		document.addEventListener('click', handleClickOutside, true)
-		return () => {
-			document.removeEventListener('click', handleClickOutside, true)
-		}
-	}, [])
+const SearchBar = ({ products }: { products: productType[] }) => {
 
-	const router = useRouter()
-	const [active, setActive] = useState(true)
-	const ref = useRef<HTMLLabelElement>(null)
+	const [value, setValue] = useState('')
 
-	const handleClickOutside = ({ target }: MouseEvent) => {
-		if (ref.current && !ref.current.contains(target as Node)) {
-			setActive(true)
-		}
-	}
+	const { filterParams, setFilterParams } = useContext(Context)
+	const filteredProducts = filterProductByParams(products, filterParams)
 
 	return (
-		<label
-			ref={ref}
-			className={styles['serch-bar']}
-			onClick={() => setActive(false)}
-		>
-			<FontAwesomeIcon
-				className={styles['search-icon']}
-				size='xl'
-				icon={faMagnifyingGlass}
-				style={active ? { display: 'block' } : { display: 'none' }}
-			/>
-			<input
-				onChange={(event) =>
-					router.push(`?filter=${event.target.value.toLowerCase()}`)
+		<>
+			<Input
+				label="Search"
+				value={value}
+				isClearable
+				radius="md"
+				onChange={(event) => {
+					setValue(event.target.value)
+					setFilterParams(event.target.value)
+				}}
+				onClear={() => {
+					setValue('')
+					setFilterParams('')
+				}}
+				classNames={{
+					label: "text-black/50 dark:text-white/90",
+					input: [
+						"bg-transparent",
+						"text-black/90 dark:text-white/90",
+						"placeholder:text-default-700/50 dark:placeholder:text-white/60",
+					],
+					innerWrapper: "bg-transparent",
+					inputWrapper: [
+						"shadow-xl",
+						"bg-default-200/50",
+						"dark:bg-default/60",
+						"backdrop-blur-xl",
+						"backdrop-saturate-200",
+						"hover:bg-default-200/70",
+						"dark:hover:bg-default/70",
+						"group-data-[focused=true]:bg-default-200/50",
+						"dark:group-data-[focused=true]:bg-default/60",
+						"!cursor-text",
+					],
+				}}
+				placeholder="Type to search..."
+				startContent={
+					<FontAwesomeIcon
+						icon={faMagnifyingGlass}
+						className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0"
+					/>
 				}
-				className={`${styles['search-input']} `}
-				type="text" placeholder="Search.."
-				style={active ? { display: 'none' } : { display: 'block' }}
 			/>
-		</label>
+			{filteredProducts.error &&
+				<span className='absolute left-0 -bottom-9 text-red-400'>Result not found</span>
+			}
+		</>
 	)
 }
 

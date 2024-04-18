@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faX } from '@fortawesome/free-solid-svg-icons'
 
-
 const Modal = ({
 	children,
 }: {
@@ -28,9 +27,9 @@ const Modal = ({
 			<div className={styles['modal-content']}>
 				<button
 					onClick={router.back}
-					className={styles.close}
+					className="text-red-500 bg-none absolute z-20 right-0 top-0 px-2"
 				>
-					<FontAwesomeIcon icon={faX} size="2xl" />
+					<FontAwesomeIcon icon={faX} size="sm" />
 				</button>
 				{children}
 			</div>

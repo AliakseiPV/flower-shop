@@ -1,7 +1,7 @@
 'use client'
 
 import { Context } from "@/context/cartContext"
-import type { productType } from "@/types/productType"
+import type { productType } from "@/types/types"
 import { useContext } from "react"
 import toast from "react-hot-toast"
 import { ActionButton } from "../actionButton"
@@ -18,7 +18,7 @@ const Product = ({
 
 			<ActionButton
 				clickAction={() => handleAddToCart(product)}
-				className={undefined}
+				className="bg-green-200 font-semibold"
 				successMessage={`${product?.title} added to cart`}
 			>
 				Add to Cart

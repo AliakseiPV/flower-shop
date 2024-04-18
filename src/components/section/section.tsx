@@ -1,7 +1,8 @@
-"use client"
+'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
-import styles from './section.module.css'
+import { Select, SelectItem } from '@nextui-org/react'
+import { useContext, useState } from 'react'
+import { Context } from '@/context/filterContext'
 
 type option = {
 	name: string,
@@ -14,29 +15,31 @@ const Section = ({
 	options: option[]
 }) => {
 
-	const router = useRouter()
-	const params = useSearchParams()
-	const filterParams= params.get('filter') as string
+	const [values, setValues] = useState(new Set([]));
+	const { setFilterParams } = useContext(Context)
+
+	const handleSelectionChange = (event: any) => {
+		setValues(new Set(event.target.value.split(",")))
+		setFilterParams(event.target.value)
+	}
 
 	return (
-		<select
-			className={styles.select}
-			defaultValue={filterParams}
+		<Select
+			label="Filter products"
+			className="min-w-fit w-40"
 			name="filter"
+			selectedKeys={values}
+			onChange={handleSelectionChange}
 		>
-			{options.map((option) =>
-			(<option
-				onClick={(event) => {
-					const { value } = event.target as HTMLOptionElement
-					router.push(`?filter=${value}`)
-				}}
-				key={option.value}
-				value={option.value}
-			>
-				{option.name}
-			</option>)
-			)}
-		</select>
+			{options.map((option) => (
+				<SelectItem
+					key={option.value}
+					value={option.value}
+				>
+					{option.name}
+				</SelectItem>
+			))}
+		</Select>
 	)
 }
 

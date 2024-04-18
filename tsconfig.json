@@ -34,7 +34,7 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"src/context/cartContext.tsx"
-	],
+, "src/components/adminTable"	],
 	"exclude": [
 		"node_modules"
 	]

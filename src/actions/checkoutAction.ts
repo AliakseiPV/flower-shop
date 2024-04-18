@@ -1,7 +1,7 @@
 'use server'
 
 import { prisma } from "@/prisma";
-import { cartItem, productType } from "@/types/productType";
+import { cartItem, productType } from "@/types/types";
 import { getErrorMessage } from "@/utiles/getErrorMessage";
 import { getCartFormData } from "@/utiles/getFormData";
 
@@ -49,7 +49,6 @@ export const checkoutAction = async (products: cartItem[], formData: FormData) =
 				}
 			}
 		})
-
 	} catch (error) {
 		return { error: getErrorMessage(error) }
 	}

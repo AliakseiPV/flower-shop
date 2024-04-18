@@ -2,7 +2,7 @@
 
 import { prisma } from '@/prisma'
 import { revalidatePath } from 'next/cache'
-import { productType } from '@/types/productType'
+import { productType } from '@/types/types'
 import { deleteImage, uploadImage } from './fileActions'
 import { getErrorMessage } from '@/utiles/getErrorMessage'
 import { getAdminFormData } from '@/utiles/getFormData'

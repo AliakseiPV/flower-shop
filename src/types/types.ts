@@ -15,3 +15,14 @@ export type cartItem = {
 	quantity: number;
 }
 
+export type checkout = {
+	id: string;
+	name: string;
+	phone: string;
+	email: string;
+	comment: string | null;
+	deliveryDate: string;
+	createdAt: Date;
+	status: string;
+}
+

@@ -1,4 +1,4 @@
-import { productType } from "@/types/productType"
+import { productType } from "@/types/types"
 
 export const filterProductByParams = (products: Array<productType>, filterParams: string) => {
 	let productArr: {
@@ -8,6 +8,10 @@ export const filterProductByParams = (products: Array<productType>, filterParams
 		= {
 		array: [...products],
 		error: null
+	}
+
+	if (!filterParams) {
+		return productArr
 	}
 
 	if (filterParams === 'createdAt') {

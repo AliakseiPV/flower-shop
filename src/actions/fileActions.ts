@@ -1,28 +1,51 @@
 "use server"
 
-import { join } from 'path'
-import { writeFile, stat, unlink } from 'fs/promises'
-import { renameFile } from '@/utiles/renameFile'
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
+import { renameFile } from "@/utiles/renameFile";
+
+const s3Client = new S3Client({
+	region: process.env.NEXT_AWS_S3_REGION,
+	credentials: {
+		accessKeyId: process.env.NEXT_AWS_S3_ACCESS_KEY_ID as string,
+		secretAccessKey: process.env.NEXT_AWS_S3_SECRET_ACCESS_KEY_ID as string,
+	}
+});
+
+async function uploadFileToS3(file: Buffer, fileName: string) {
+
+	const fileBuffer = file;
+
+	const params = {
+		Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
+		Key: `productsImages/${fileName}`,
+		Body: fileBuffer,
+		ContentType: "image/jpg"
+	}
+
+	const command = new PutObjectCommand(params);
+	await s3Client.send(command);
+	return fileName;
+}
+
 
 export const uploadImage = async (data: FormData, inputName: string) => {
 	try {
+
 		const file: File | null = data.get(inputName) as unknown as File
 
 		if (!file) {
-			throw new Error('No file uploaded')
+			throw new Error('File is required')
 		}
-		
 		if (file.name !== 'undefined') {
 			const newFile = renameFile(file)
 
 			const bytes = await newFile.arrayBuffer()
 			const buffer = Buffer.from(bytes)
 
-			const path = join('./public', 'images', newFile.name)
-			await writeFile(path, buffer)
+			const fileName = await uploadFileToS3(buffer, newFile.name)
 
 			return {
-				name: newFile.name,
+				name: fileName,
 				success: true
 			}
 		}
@@ -32,14 +55,14 @@ export const uploadImage = async (data: FormData, inputName: string) => {
 	}
 }
 
-export const deleteImage = async (name: string) => {
-	try {
-		const path = join('./public', 'images', name)
-		const fileStat = await stat(path)
+export const deleteFileFromS3 = async (name: string) => {
 
-		if (fileStat.isFile()) {
-			await unlink(path)
+	try {
+		const deleteParams = {
+			Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
+			Key: `productsImages/${name}`,
 		}
+		await s3Client.send(new DeleteObjectCommand(deleteParams))
 	} catch (error) {
 		return { error }
 	}

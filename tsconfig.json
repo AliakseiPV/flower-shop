@@ -33,8 +33,10 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		"src/context/cartContext.tsx"
-, "src/components/adminTable"	],
+		"src/context/cartContext.tsx",
+		"src/components/adminTable",
+		"src/app/api/auth/[kindeAuth]/route.js"
+	],
 	"exclude": [
 		"node_modules"
 	]

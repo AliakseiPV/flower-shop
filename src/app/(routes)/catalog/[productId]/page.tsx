@@ -1,4 +1,4 @@
-import { Product } from "@/components";
+import { Product, SwiperComponent } from "@/components";
 import { prisma } from "@/prisma";
 
 
@@ -15,9 +15,20 @@ const ProductPage = async ({ params }: any) => {
 	return (
 
 		<div>
-			{product?.title}
 
-			<Product product={product} />
+			<div className="w-full grid grid-cols-2 gap-10 px-10 mt-10">
+				<div className="flex justify-center items-center">
+					<SwiperComponent images={product?.img} />
+				</div>
+
+				<div >
+					<Product product={product} />
+				</div>
+			</div>
+
+
+
+
 
 		</div>
 	)

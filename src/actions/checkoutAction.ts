@@ -1,11 +1,13 @@
 'use server'
 
 import { prisma } from "@/prisma";
-import { cartItem, productType } from "@/types/types";
+import { CartItem, ProductType } from "@/types/types";
 import { getErrorMessage } from "@/utiles/getErrorMessage";
 import { getCartFormData } from "@/utiles/getFormData";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
-const createCheckoutProducts = (products: cartItem[]) => {
+const createCheckoutProducts = (products: CartItem[]) => {
 	const result: {
 		checkoutQuantity: number,
 		product: {
@@ -28,7 +30,7 @@ const createCheckoutProducts = (products: cartItem[]) => {
 	return result
 }
 
-export const checkoutAction = async (products: cartItem[], formData: FormData) => {
+export const checkoutAction = async (products: CartItem[], formData: FormData) => {
 
 	try {
 		if (!products.length) {
@@ -59,7 +61,7 @@ export const getCheckoutProducts = async (checkoutId: string) => {
 	let products: {
 		quantity: number,
 		checkoutDate: Date,
-		product: productType | null
+		product: ProductType | null
 	}[] = []
 
 	const checkoutOnProduct = await prisma.checkoutOnProduct.findMany({
@@ -85,7 +87,21 @@ export const getCheckoutProducts = async (checkoutId: string) => {
 }
 
 export const updateCheckoutStatus = async (checkoutId: string, value: string) => {
+
 	try {
+
+		const { isAuthenticated, getPermission } = getKindeServerSession()
+		const isLoggedIn = await isAuthenticated()
+
+		if (!isLoggedIn) {
+			redirect('/')
+		}
+
+		const requiredPremission = await getPermission('update:status')
+		if (!requiredPremission?.isGranted) {
+			redirect('/')
+		}
+
 		await prisma.checkout.update({
 			where: {
 				id: checkoutId

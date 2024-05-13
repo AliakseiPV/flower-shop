@@ -2,14 +2,30 @@
 
 import { prisma } from '@/prisma'
 import { revalidatePath } from 'next/cache'
-import { productType } from '@/types/types'
-import { deleteImage, uploadImage } from './fileActions'
+import { ProductType } from '@/types/types'
+import { deleteFileFromS3, uploadImage } from './fileActions'
 import { getErrorMessage } from '@/utiles/getErrorMessage'
 import { getAdminFormData } from '@/utiles/getFormData'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import { redirect } from 'next/navigation'
 
 
 export const addProduct = async (formData: FormData) => {
+
 	try {
+
+		const { isAuthenticated, getPermission } = getKindeServerSession()
+		const isLoggedIn = await isAuthenticated()
+
+		if (!isLoggedIn) {
+			redirect('/')
+		}
+
+		const requiredPremission = await getPermission('add:product')
+		if (!requiredPremission?.isGranted) {
+			redirect('/')
+		}
+
 		const data = getAdminFormData(formData)
 		const images: string[] = new Array(4)
 
@@ -41,10 +57,24 @@ export const addProduct = async (formData: FormData) => {
 	revalidatePath('/products')
 }
 
-export const deleteProduct = async (product: productType) => {
+export const deleteProduct = async (product: ProductType) => {
+
 	try {
+
+		const { isAuthenticated, getPermission } = getKindeServerSession()
+		const isLoggedIn = await isAuthenticated()
+
+		if (!isLoggedIn) {
+			redirect('/')
+		}
+
+		const requiredPremission = await getPermission('delete:product')
+		if (!requiredPremission?.isGranted) {
+			redirect('/')
+		}
+
 		product.img.forEach(async img => {
-			await deleteImage(img)
+			await deleteFileFromS3(img)
 		})
 		await prisma.checkoutOnProduct.deleteMany({
 			where: {
@@ -64,8 +94,22 @@ export const deleteProduct = async (product: productType) => {
 	revalidatePath('/products')
 }
 
-export const updateProduct = async (formData: FormData, product: productType) => {
+export const updateProduct = async (formData: FormData, product: ProductType) => {
+
 	try {
+
+		const { isAuthenticated, getPermission } = getKindeServerSession()
+		const isLoggedIn = await isAuthenticated()
+
+		if (!isLoggedIn) {
+			redirect('/')
+		}
+
+		const requiredPremission = await getPermission('update:product')
+		if (!requiredPremission?.isGranted) {
+			redirect('/')
+		}
+
 		const data = getAdminFormData(formData)
 		const dbImages = product.img
 
@@ -73,7 +117,7 @@ export const updateProduct = async (formData: FormData, product: productType) =>
 			const img: File | null = formData.get(`Image${i}`) as unknown as File
 
 			if (img.name !== 'undefined') {
-				await deleteImage(product.img[i])
+				await deleteFileFromS3(product.img[i])
 				const uploadImg = await uploadImage(formData, `Image${i}`)
 
 				if (uploadImg?.name) {

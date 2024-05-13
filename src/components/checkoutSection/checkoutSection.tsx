@@ -13,22 +13,23 @@ const CheckoutSection = ({ defaultValue, checkoutId }: { defaultValue: string, c
 	const [disable, setDisable] = useState(true)
 	const [value, setValue] = React.useState(defaultValue)
 
-	const handleSelectionChange = (event: any) => {
+	const handleSelectionChange = (event: { target: { value: React.SetStateAction<string> } }) => {
 		setValue(event.target.value)
 		setDisable(false)
 	}
 
 
 	return (
-		<div>
+		<div className='flex items-center gap-2 my-3'>
 			<Select
+				size='sm'
 				isRequired
 				label="Status"
 				startContent={<FontAwesomeIcon icon={faChartBar} />}
 				defaultSelectedKeys={[value]}
 				disallowEmptySelection
 				onChange={handleSelectionChange}
-				className="max-w-xs"
+				className="max-w-44"
 			>
 				{statusOptions.map((status) => (
 					<SelectItem
@@ -44,6 +45,7 @@ const CheckoutSection = ({ defaultValue, checkoutId }: { defaultValue: string, c
 				startContent={<FontAwesomeIcon icon={faDownload} />}
 				color="success"
 				isDisabled={disable}
+				className='font-semibold'
 				onClick={async () => {
 					const result = await updateCheckoutStatus(checkoutId, value)
 					if (result?.error) {

@@ -1,9 +1,8 @@
 
-import type { productType, checkoutType } from '@/types/types';
-import { statusOptions } from '@/utiles/statusOptions';
-import { Link, Select, SelectItem } from '@nextui-org/react';
-import React from 'react'
+import type { ProductType, CheckoutType } from '@/types/types';
+import { Link } from '@nextui-org/react';
 import { CheckoutSection } from '../checkoutSection';
+import { getDate } from '@/utiles/getDate';
 
 const Checkout = ({
 	checkout,
@@ -12,11 +11,20 @@ const Checkout = ({
 	checkoutProducts: {
 		quantity: number;
 		checkoutDate: Date;
-		product: productType | null;
+		product: ProductType | null;
 	}[],
-	checkout: checkoutType | null;
+	checkout: CheckoutType | null;
 }) => {
 
+	const checkoutInfo = [
+		{ data: checkout?.id, label: "Checkout Id:" },
+		{ data: checkout && getDate(checkout.createdAt), label: "Order Date:" },
+		{ data: checkout?.name, label: "Client Name:" },
+		{ data: checkout?.email, label: "Client Email:" },
+		{ data: checkout?.phone, label: "Client Phone:" },
+		{ data: checkout?.deliveryDate, label: "Delivery Date:" },
+		{ data: checkout?.comment, label: "Client Comment:" },
+	]
 
 	const countAveragePrice = (
 	) => {
@@ -31,83 +39,63 @@ const Checkout = ({
 	}
 
 	return (
-		<div style={{ marginLeft: '200px' }}>
+		<div className=' w-full px-20'>
 
-			<h2>Client Info</h2>
+			<h2 className='font-semibold text-xl mb-3'>Client Info</h2>
 
-			{checkout &&
+			<div className='grid grid-cols-2 gap-4'>
+				{checkout &&
 
-				<ul>
-					<li>
-						<span>Checkout Id:</span>
-						<span>{checkout.id}</span>
-					</li>
-					<li>
-						<span>Order Date:</span>
-						<span>
-							{`${checkout.createdAt.getFullYear()}-${checkout.createdAt.getMonth() + 1}-${checkout?.createdAt.getDay()}`}
-						</span>
-					</li>
-					<li>
-						<span>Client Name:</span>
-						<span>{checkout.name}</span>
-					</li>
-					<li>
-						<span>Client Email:</span>
-						<span>{checkout.email}</span>
-					</li>
-					<li>
-						<span>Client phone:</span>
-						<span>{checkout.phone}</span>
-					</li>
-					<li>
-						<span>Delivery Date:</span>
-						<span>{checkout.deliveryDate}</span>
-					</li>
-					<li>
-						<span>Client Comment:</span>
-						<span>{checkout.comment}</span>
-					</li>
-					<li>
-						<CheckoutSection checkoutId={checkout.id} defaultValue={checkout.status} />
-					</li>
-				</ul>
-			}
+					<ul className='flex flex-col gap-2'>
+						<li>
+							<CheckoutSection checkoutId={checkout.id} defaultValue={checkout.status} />
+						</li>
+						{
+							checkoutInfo.map((item, index) => (
+								<li className='flex gap-2' key={index}>
+									<span className=' font-semibold'>{item.label}</span>
+									<span>{item.data}</span>
+								</li>
+							))
+						}
 
-			<h2>Checkout Info</h2>
-
-			{checkoutProducts.map((item) => (
-				<div key={item.product?.id}>
-					<ul>
-						<li>
-							<span>Product Id:</span>
-							<span>{item.product?.id}</span>
-						</li>
-						<li>
-							<span>Product Title:</span>
-							<span>{item.product?.title}</span>
-						</li>
-						<li>
-							<span>Product Details:</span>
-							<span>{item.product?.details}</span>
-						</li>
-						<li>
-							<span>Product Price:</span>
-							<span>{item.product?.price}</span>
-						</li>
-						<li>
-							<span>Quantity</span>
-							<span>{item.quantity}</span>
-						</li>
 					</ul>
-					<Link href={`/catalog/${item.product?.id}`}>
-						Link to product
-					</Link>
-				</div>
-			))}
+				}
 
-			<div>
-				<span>Average Price: </span>
+				{checkoutProducts.map((item) => (
+					<div key={item.product?.id} className='flex flex-col gap-2'>
+						<ul className='flex flex-col gap-2'>
+							<li className='flex gap-2'>
+								<span className=' font-semibold'>Product Id:</span>
+								<span>{item.product?.id}</span>
+							</li>
+							<li className='flex gap-2'>
+								<span className=' font-semibold'>Product Title:</span>
+								<span>{item.product?.title}</span>
+							</li>
+							<li className='flex gap-2'>
+								<span className=' font-semibold'>Product Details:</span>
+								<span>{item.product?.details}</span>
+							</li>
+							<li>
+								<span className=' font-semibold'>Product Price:</span>
+								<span>{item.product?.price}</span>
+							</li>
+							<li className='flex gap-2'>
+								<span className=' font-semibold'>Quantity</span>
+								<span>{item.quantity}</span>
+							</li>
+						</ul>
+						<Link color="secondary" href={`/catalog/${item.product?.id}`}>
+							Link to product
+						</Link>
+					</div>
+				))}
+			</div>
+
+
+			<div className='flex gap-2 mt-10'>
+				<span className=' font-semibold'>Average Price: </span>
 				<span>{countAveragePrice()}</span>
 			</div>
 

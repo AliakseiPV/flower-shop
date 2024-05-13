@@ -1,22 +1,20 @@
 'use client'
 
-import type { productType } from '@/types/types'
-import Image from 'next/image'
+import type { ProductType } from '@/types/types'
 import Link from 'next/link'
 import { deleteProduct } from '@/actions/productActions'
 import { ActionButton } from '../actionButton'
-import style from './adminProduct.module.css'
 import { findExistingImg } from '@/utiles/findExistingImg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Modal } from '../modal'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { faEraser, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { Button } from '@nextui-org/react'
+import { Button, Card, CardFooter, Image } from '@nextui-org/react'
 
 const AdminProduct = ({
 	product,
 }: {
-	product: productType,
+		product: ProductType,
 }
 ) => {
 
@@ -26,17 +24,23 @@ const AdminProduct = ({
 	const modal = searchParams.get('modal')
 
 	return (
-		<div className={style['product-wrapper']}>
+		<Card
+			isFooterBlurred
+			radius="lg"
+			className="border-none w-fit h-fit"
+		>
 
 			{
 				modal === 'ACTIVE' &&
 				<Modal>
-					<ActionButton
+						<ActionButton
+							isIconOnly={false}
+						isDisabled={false}
 						clickAction={async () => {
 							router.back()
 							return await deleteProduct(product)
 						}}
-						className={style.img}
+						className="rounded-lg border-2 border-red-700 bg-zinc-200 font-semibold"
 						successMessage={'Product deleted'}
 					>
 						<FontAwesomeIcon icon={faEraser} />
@@ -47,38 +51,46 @@ const AdminProduct = ({
 
 			<Link
 				href={`?modal=ACTIVE`}
-				className="border-none bg-transparent absolute right-2 top-0 text-red-500 cursor-pointer"
+				className="border-none bg-transparent absolute z-30 right-4 top-2 text-red-500 cursor-pointer"
 			>
-				<FontAwesomeIcon icon={faTrash} size="sm" />
+				<FontAwesomeIcon icon={faTrash} size="lg" />
 			</Link>
 
 			{
 				img.name
 					?
 					<Image
-						src={`/images/${product.img[img.id]}`}
-						className="rounded-xl"
-						alt={product.title}
-						width={170}
-						height={200}
-						priority
+						isZoomed
+						alt="Woman listing to music"
+						className="object-cover w-60 h-72"
+						src={`${process.env.NEXT_PUBLIC_AWS_S3_OBJECT_URL}/productsImages/${product.img[img.id]}`}
 					/>
 					:
-					<span>No Image</span>
+					<span className='bg-zinc-100 dark:bg-default/60 flex w-60 h-72 items-center justify-center font-semibold'>No Image</span>
 			}
 
-			<Button
-				href={`?id=${product.id}&modal=PUT`}
-				as={Link}
-				color="success"
-				className='absolute flex align-middle bottom-0 bg-green-200  font-semibold  px-5'
-				variant="solid"
-			>
-				Edit
-				<FontAwesomeIcon icon={faPenToSquare} />
-			</Button>
+			<CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
+				{product.availability
+					?
+					<p className="text-tiny text-white uppercase font-bold">available</p>
+					:
+					<p className="text-tiny text-white uppercase font-bold">unavailable</p>
+				}
 
-		</div>
+				<Button
+					href={`?id=${product.id}&modal=PUT`}
+					as={Link}
+					className="text-tiny text-white bg-black/20"
+					variant="flat"
+					color="default"
+					radius="lg"
+					size="sm"
+					startContent={<FontAwesomeIcon icon={faPenToSquare} />}
+				>
+					Edit
+				</Button>
+			</CardFooter>
+		</Card>
 	)
 }
 

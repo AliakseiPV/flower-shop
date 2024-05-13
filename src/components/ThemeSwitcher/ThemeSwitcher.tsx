@@ -30,7 +30,7 @@ const ThemeSwitcher = () => {
 				}
 			}}
 			size="sm"
-			color='secondary'
+			color="default"
 			thumbIcon={({ isSelected, className }) =>
 				isSelected ?
 					(

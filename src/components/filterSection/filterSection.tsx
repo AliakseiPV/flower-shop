@@ -3,6 +3,8 @@
 import { Select, SelectItem } from '@nextui-org/react'
 import { useContext, useState } from 'react'
 import { Context } from '@/context/filterContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
 
 type option = {
 	name: string,
@@ -25,10 +27,11 @@ const FilterSection = ({
 
 	return (
 		<Select
-			label="Filter products"
-			className="min-w-fit w-40"
+			label="Filter"
+			className="min-w-fit w-40 shadow-md rounded-xl"
 			name="filter"
 			selectedKeys={values}
+			startContent={<FontAwesomeIcon icon={faFilter} />}
 			onChange={handleSelectionChange}
 		>
 			{options.map((option) => (

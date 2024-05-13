@@ -8,17 +8,23 @@ const ActionButton = ({
 	clickAction,
 	children,
 	className,
-	successMessage
+	successMessage,
+	isDisabled,
+	isIconOnly
 }: {
 	clickAction: Function
 	children: ReactNode | undefined,
-	className: string | undefined
-	successMessage: string
+	className: string | undefined,
+	successMessage: string,
+	isDisabled: boolean
+	isIconOnly: boolean
 }
 ) => {
 
 	return (
 		<Button
+			isIconOnly={isIconOnly}
+			isDisabled={isDisabled}
 			className={className}
 			onClick={() => {
 				const result = clickAction()

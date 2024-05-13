@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config, library } from '@fortawesome/fontawesome-svg-core'
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Providers } from "@/provider/providers"
-import { NavBar } from "@/components"
+import { Footer, NavBar } from "@/components"
 import CartContext from "@/context/cartContext"
 
 config.autoAddCss = false
@@ -32,6 +32,7 @@ export default function RootLayout({
 						<main>
 							<NavBar />
 							{children}
+							<Footer />
 						</main>
 					</CartContext>
 				</Providers>

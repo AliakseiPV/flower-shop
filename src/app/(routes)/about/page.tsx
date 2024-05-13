@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const HomePage = () => {
 	return (
-			<div>About</div>
+		<div>About</div>
 		
 	)
 }

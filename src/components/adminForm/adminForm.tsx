@@ -3,7 +3,7 @@
 import { InputImage } from '../inputImage'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-import type { productType } from '@/types/types'
+import type { ProductType } from '@/types/types'
 import styles from './adminForm.module.css'
 
 const AdminForm = ({
@@ -13,7 +13,7 @@ const AdminForm = ({
 }: {
 	productAction: Function,
 	successMessage: string,
-	product: productType | null,
+		product: ProductType | null,
 }
 ) => {
 
@@ -38,7 +38,7 @@ const AdminForm = ({
 			<div className={styles.content}>
 				<div className={styles['main-img']}>
 					<InputImage
-						imgSrc={product?.img[0].length ? `/images/${product.img[0]}` : ''}
+						imgSrc={product?.img[0].length ? `${process.env.NEXT_PUBLIC_AWS_S3_OBJECT_URL}/productsImages/${product.img[0]}` : ''}
 						inputName={'Image0'}
 						imgWidth={250}
 						imgHeight={320}
@@ -47,19 +47,19 @@ const AdminForm = ({
 				<div >
 					<div className={styles['img-container']}>
 						<InputImage
-							imgSrc={product?.img[1].length ? `/images/${product.img[1]}` : ''}
+							imgSrc={product?.img[1].length ? `${process.env.NEXT_PUBLIC_AWS_S3_OBJECT_URL}/productsImages/${product.img[1]}` : ''}
 							inputName={'Image1'}
 							imgWidth={170}
 							imgHeight={200}
 						/>
 						<InputImage
-							imgSrc={product?.img[2].length ? `/images/${product.img[2]}` : ''}
+							imgSrc={product?.img[2].length ? `${process.env.NEXT_PUBLIC_AWS_S3_OBJECT_URL}/productsImages/${product.img[2]}` : ''}
 							inputName={'Image2'}
 							imgWidth={170}
 							imgHeight={200}
 						/>
 						<InputImage
-							imgSrc={product?.img[3].length ? `/images/${product.img[3]}` : ''}
+							imgSrc={product?.img[3].length ? `${process.env.NEXT_PUBLIC_AWS_S3_OBJECT_URL}/productsImages/${product.img[3]}` : ''}
 							inputName={'Image3'}
 							imgWidth={170}
 							imgHeight={200}

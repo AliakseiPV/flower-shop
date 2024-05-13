@@ -1,4 +1,4 @@
-import { ProductList, PublicProduct, SearchBar, FilterSection } from "@/components";
+import { ProductList, SearchBar, FilterSection } from "@/components";
 import FilterContext from "@/context/filterContext";
 import { prisma } from "@/prisma";
 import type { Metadata } from "next";
@@ -25,19 +25,15 @@ const CatalogPage = async () => {
 		<div>
 
 			<FilterContext>
-				<div>
+				<div className="flex w-fit gap-3 mt-4 ml-20">
 					<div>
 						<SearchBar products={products} />
 					</div>
+					
 					<FilterSection options={sortOptions} />
 				</div>
-
 				<ProductList products={products} />
-
 			</FilterContext>
-			{/* {products.map(product => (
-				<PublicProduct key={product.id} product={product} />
-			))} */}
 
 		</div>
 	)

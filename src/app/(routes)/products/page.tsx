@@ -2,10 +2,11 @@ import { addProduct, updateProduct, getProductById } from '@/actions/productActi
 import { AdminForm, Modal, ProductList, SearchBar, FilterSection } from '@/components'
 import { prisma } from '@/prisma'
 import Link from 'next/link'
-import styles from './page.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FilterContext from '@/context/filterContext'
 import { Button } from '@nextui-org/react'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { redirect } from 'next/navigation';
 
 const sortOptions = [
 	{ value: 'createdAt', name: 'Creation date' },
@@ -20,6 +21,19 @@ const ProductsPage = async ({
 		searchParams: { [key: string]: string | string[] | undefined }
 	}) => {
 
+	const { isAuthenticated, getPermission } = getKindeServerSession()
+	const isLoggedIn = await isAuthenticated()
+
+	if (!isLoggedIn) {
+		redirect('/')
+	}
+
+	const requiredPremission = await getPermission('add:product')
+	if (!requiredPremission?.isGranted) {
+		redirect('/')
+	}
+
+
 	const modal = searchParams.modal as string | undefined
 	const productId = Number(searchParams.id)
 
@@ -27,19 +41,10 @@ const ProductsPage = async ({
 	const product = await getProductById(productId)
 
 	return (
-		<main className={styles.main}>
-			<div className={styles.header}>
-				<h1 className={styles.title}>Products</h1>
-				<Button
-					href={`?modal=POST`}
-					as={Link}
-					color="success"
-					className=' bg-green-200 font-semibold  px-4'
-					variant="solid"
-				>
-					Add Product
-					<FontAwesomeIcon icon="plus" size="lg" className='text-green-400' />
-				</Button>
+		<main>
+			<div className='flex align-middle px-20'>
+				<h1 className='text-lg font-semibold'>Products</h1>
+
 			</div>
 
 			{modal === 'POST' &&
@@ -62,11 +67,23 @@ const ProductsPage = async ({
 			}
 
 			<FilterContext>
-				<div className={styles['filter-container']}>
-					<div className={styles['search-container']}>
-						<SearchBar products={products} />
+				<div className="flex w-full gap-3 mt-4 px-20 justify-between items-end">
+					<div className="flex w-fit gap-3">
+						<div>
+							<SearchBar products={products} />
+						</div>
+						<FilterSection options={sortOptions} />
 					</div>
-					<FilterSection options={sortOptions} />
+					<Button
+						href={`?modal=POST`}
+						as={Link}
+						color="success"
+						className='uppercase bg-green-200 font-semibold px-4 shadow-md'
+						variant="solid"
+						endContent={<FontAwesomeIcon icon="plus" size="xl" className='text-green-400' />}
+					>
+						Add New
+					</Button>
 				</div>
 
 				<ProductList products={products} />

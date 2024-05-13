@@ -1,4 +1,4 @@
-export type productType = {
+export type ProductType = {
 	id: number;
 	title: string;
 	details: string;
@@ -7,15 +7,16 @@ export type productType = {
 	img: string[];
 	availability: boolean;
 	type: string;
+	totalSold: number;
 	createdAt: Date;
 }
 
-export type cartItem = {
-	data: productType;
+export type CartItem = {
+	data: ProductType;
 	quantity: number;
 }
 
-export type checkoutType = {
+export type CheckoutType = {
 	id: string;
 	name: string;
 	phone: string;

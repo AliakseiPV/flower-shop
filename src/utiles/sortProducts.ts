@@ -1,8 +1,8 @@
-import { productType } from "@/types/types"
+import { ProductType } from "@/types/types"
 
-export const filterProductByParams = (products: Array<productType>, filterParams: string) => {
+export const filterProductByParams = (products: Array<ProductType>, filterParams: string) => {
 	let productArr: {
-		array: Array<productType>
+		array: Array<ProductType>
 		error: string | null
 	}
 		= {

@@ -1,6 +1,6 @@
-import { productType } from "@/types/types"
+import { ProductType } from "@/types/types"
 
-export const findExistingImg = (product: productType) => {
+export const findExistingImg = (product: ProductType) => {
 	const img = {
 		name: '',
 		id: 0

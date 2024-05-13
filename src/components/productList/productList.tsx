@@ -4,18 +4,18 @@ import { Context } from '@/context/filterContext'
 import { filterProductByParams } from '@/utiles/sortProducts'
 import React, { useContext } from 'react'
 import { AdminProduct } from '../adminProduct'
-import { productType } from '@/types/types'
+import { ProductType } from '@/types/types'
 import { usePathname } from 'next/navigation'
 import { PublicProduct } from '../publicProduct'
 
-const ProductList = ({ products }: { products: productType[] }) => {
+const ProductList = ({ products }: { products: ProductType[] }) => {
 
 	const { filterParams } = useContext(Context)
 	const filteredProducts = filterProductByParams(products, filterParams)
 	const pathName = usePathname()
 
 	return (
-		<div className='gap-2 grid grid-cols-2 sm:grid-cols-4'>
+		<div className='gap-8 grid auto-rows-fr grid-cols-5 mx-20 my-10'>
 			{filteredProducts.array.map((product) => (
 				pathName === '/products'
 					?

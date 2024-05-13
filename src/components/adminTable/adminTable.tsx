@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Link, Chip, DropdownTrigger, Dropdown, Button, DropdownMenu, DropdownItem } from "@nextui-org/react";
-import { checkoutType } from "@/types/types";
+import { CheckoutType } from "@/types/types";
 import { getDate } from "@/utiles/getDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faEye } from "@fortawesome/free-solid-svg-icons";
@@ -26,7 +26,7 @@ const statusColorMap : { [key: string]: any } = {
 	EXECUTED: "danger",
 }
 
-const AdminTable = ({ checkout }: { checkout: checkoutType[] }) => {
+const AdminTable = ({ checkout }: { checkout: CheckoutType[] }) => {
 	const [statusFilter, setStatusFilter] = useState("all")
 	const [page, setPage] = useState(1)
 	const rowsPerPage = 10

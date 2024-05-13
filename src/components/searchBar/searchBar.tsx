@@ -5,12 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { Input } from '@nextui-org/react'
 import { filterProductByParams } from '@/utiles/sortProducts'
-import { productType } from '@/types/types'
+import { ProductType } from '@/types/types'
 import { Context } from '@/context/filterContext'
 
 
 
-const SearchBar = ({ products }: { products: productType[] }) => {
+const SearchBar = ({ products }: { products: ProductType[] }) => {
 
 	const [value, setValue] = useState('')
 
@@ -41,7 +41,7 @@ const SearchBar = ({ products }: { products: productType[] }) => {
 					],
 					innerWrapper: "bg-transparent",
 					inputWrapper: [
-						"shadow-xl",
+						"shadow-md",
 						"bg-default-200/50",
 						"dark:bg-default/60",
 						"backdrop-blur-xl",
@@ -56,9 +56,7 @@ const SearchBar = ({ products }: { products: productType[] }) => {
 				placeholder="Type to search..."
 				startContent={
 					<FontAwesomeIcon
-						icon={faMagnifyingGlass}
-						className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0"
-					/>
+						icon={faMagnifyingGlass}/>
 				}
 			/>
 			{filteredProducts.error &&

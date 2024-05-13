@@ -2,11 +2,11 @@
 
 import { createContext, useEffect, useState } from 'react'
 import type { PropsWithChildren } from "react"
-import type { cartItem, productType } from '@/types/types'
+import type { CartItem, ProductType } from '@/types/types'
 import { getErrorMessage } from '@/utiles/getErrorMessage'
 
 type Context = {
-	cartItems: cartItem[],
+	cartItems: CartItem[],
 	getCartCount: Function
 	handleAddToCart: Function,
 	handleRemoveOneFromCart: Function,
@@ -37,7 +37,7 @@ export const Context = createContext<Context>(initialContext)
 
 const CartContext = ({ children }: PropsWithChildren<unknown>) => {
 
-	const [cartItems, setCartItems] = useState<cartItem[]>(initialContext.cartItems)
+	const [cartItems, setCartItems] = useState<CartItem[]>(initialContext.cartItems)
 
 	useEffect(() => {
 		const cartValues = localStorage.getItem('cart')
@@ -46,8 +46,7 @@ const CartContext = ({ children }: PropsWithChildren<unknown>) => {
 		}
 	}, [])
 
-
-	const handleAddToCart = (product: productType) => {
+	const handleAddToCart = (product: ProductType) => {
 		try {
 			const existElement = cartItems.find((item) => item.data.id === product.id)
 
@@ -70,7 +69,7 @@ const CartContext = ({ children }: PropsWithChildren<unknown>) => {
 		}
 	}
 
-	const handleRemoveOneFromCart = (product: productType) => {
+	const handleRemoveOneFromCart = (product: ProductType) => {
 		try {
 			const existElement = cartItems.find((item) => item.data.id === product.id)
 
@@ -94,7 +93,7 @@ const CartContext = ({ children }: PropsWithChildren<unknown>) => {
 		}
 	}
 
-	const handleRemoveAllFromCart = (product: productType) => {
+	const handleRemoveAllFromCart = (product: ProductType) => {
 		try {
 			const existElement = cartItems.find((item) => item.data.id === product.id)
 

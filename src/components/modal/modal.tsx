@@ -27,9 +27,9 @@ const Modal = ({
 			<div className={styles['modal-content']}>
 				<button
 					onClick={router.back}
-					className="text-red-500 bg-none absolute z-20 right-0 top-0 px-2"
+					className="text-red-500 bg-none absolute z-20 right-1 top-2 px-2"
 				>
-					<FontAwesomeIcon icon={faX} size="sm" />
+					<FontAwesomeIcon icon={faX} size="lg" />
 				</button>
 				{children}
 			</div>

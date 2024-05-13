@@ -2,11 +2,12 @@
 
 import { Context } from "@/context/cartContext"
 import { useContext, useState } from "react"
-import { ThemeSwitcher } from "../ThemeSwitcher"
-import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react"
+import { ThemeSwitcher } from "../themeSwitcher"
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Spinner } from "@nextui-org/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons"
 import { usePathname } from 'next/navigation'
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 
 const menuItems = [
 	"Dashboard",
@@ -18,15 +19,30 @@ const menuItems = [
 	"Login",
 ]
 
+const mainRotes = [
+	{ path: '/dashboard', name: "Dashboard", requiredPremissions: ['add:product'] },
+	{ path: '/products', name: "Products", requiredPremissions: ['add:product'] },
+	{ path: '/catalog', name: "Catalog" },
+	{ path: '/about', name: "About" },
+	{ path: '/services', name: "Services" }
+]
+
 const NavBar = () => {
+
+	const { getPermissions } = useKindeBrowserClient()
+
+	const { permissions } = getPermissions()
 
 	const pathName = usePathname()
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
-	const {  getCartCount } = useContext(Context)
+	const { getCartCount } = useContext(Context)
 	const count = getCartCount()
 
 	return (
-		<Navbar shouldHideOnScroll onMenuOpenChange={setIsMenuOpen}>
+		<Navbar
+			shouldHideOnScroll
+			onMenuOpenChange={setIsMenuOpen}
+		>
 			<NavbarContent>
 				<NavbarMenuToggle
 					aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -34,47 +50,25 @@ const NavBar = () => {
 				/>
 				<NavbarBrand>
 					<NavbarItem>
-						<Link className="font-bold text-xl" color="foreground" href="/">
+						<Link className="font-semibold text-xl" color="foreground" href="/">
 							Perrfect Petals
 						</Link>
 					</NavbarItem>
 				</NavbarBrand>
 			</NavbarContent>
 			<NavbarContent className="hidden lg:flex gap-4" justify="center">
-				<NavbarItem isActive={pathName === '/dashboard' ? true : false} >
-					<Link
-						color={pathName === '/dashboard' ? 'primary' : 'foreground'}
-						href="/dashboard">
-						Dashboard
-					</Link>
-				</NavbarItem>
-				<NavbarItem isActive={pathName === '/products' ? true : false} >
-					<Link
-						color={pathName === '/products' ? 'primary' : 'foreground'}
-						href="/products">
-						Products
-					</Link>
-				</NavbarItem>
-				<NavbarItem isActive={pathName === '/catalog' ? true : false} >
-					<Link color={pathName === '/catalog' ? 'secondary' : 'foreground'}
-						href="/catalog">
-						Catalog
-					</Link>
-				</NavbarItem>
-				<NavbarItem isActive={pathName === '/about' ? true : false}>
-					<Link color={pathName === '/about' ? 'secondary' : 'foreground'}
-						href="/about" >
-						About
-					</Link>
-				</NavbarItem>
-				<NavbarItem isActive={pathName === '/services' ? true : false}>
-					<Link
-						color={pathName === '/services' ? 'secondary' : 'foreground'}
-						href="/services"
-					>
-						Services
-					</Link>
-				</NavbarItem>
+				{mainRotes.map(({ path, name, requiredPremissions }) => {
+					if (!requiredPremissions || requiredPremissions?.every(p => permissions?.includes(p))) {
+						return (
+							<NavbarItem key={name} isActive={pathName === path ? true : false} >
+								<Link
+									color={pathName === path ? 'secondary' : 'foreground'}
+									href={path}>
+									{name}
+								</Link>
+							</NavbarItem>)
+					}
+				})}
 			</NavbarContent>
 			<NavbarContent justify="end" className="ml-8 flex align-middle">
 				<NavbarItem
@@ -98,16 +92,6 @@ const NavBar = () => {
 				</NavbarItem>
 				<NavbarItem >
 					<ThemeSwitcher />
-				</NavbarItem>
-				<NavbarItem>
-					<Button
-						className="ml-8 hidden lg:flex"
-						as={Link}
-						color='secondary'
-						href="/login"
-						variant="flat">
-						Login
-					</Button>
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarMenu>

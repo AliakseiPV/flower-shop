@@ -13,14 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       String  @id @default(uuid())
-  name     String
-  email    String  @unique
-  password String
-  isAdmin  Boolean
-}
-
 model Product {
   id                Int                 @id @default(autoincrement())
   title             String
@@ -30,6 +22,7 @@ model Product {
   img               String[]
   availability      Boolean             @default(false)
   type              String              @default("flower")
+  totalSold         Int                 @default(0)
   createdAt         DateTime            @default(now())
   CheckoutOnProduct CheckoutOnProduct[]
 }
@@ -42,7 +35,7 @@ model Checkout {
   comment           String?
   deliveryDate      String
   createdAt         DateTime            @default(now())
-  status            String             @default("EXCEPTED")
+  status            String              @default("EXCEPTED")
   CheckoutOnProduct CheckoutOnProduct[]
 }
 

@@ -12,10 +12,13 @@ const SwiperComponent = ({ images }: { images: string[] | undefined }) => {
 
 	const [thumbsSwiper, setThumbSwiper] = useState<any>(null)
 
+	const imagesCount = images?.filter((img) => img).length
+
+
 	return (
 		<div className='w-full max-w-[540px]'>
 			<Swiper
-				loop={true}
+				loop={(imagesCount && imagesCount > 1) ? true : false}
 				spaceBetween={10}
 				thumbs={{
 					swiper:
@@ -43,9 +46,9 @@ const SwiperComponent = ({ images }: { images: string[] | undefined }) => {
 			</Swiper>
 			<Swiper
 				onSwiper={setThumbSwiper}
-				loop={true}
+				loop={(imagesCount && imagesCount > 1) ? true : false}
 				spaceBetween={12}
-				slidesPerView={4}
+				slidesPerView={imagesCount}
 				freeMode={true}
 				watchSlidesProgress={true}
 				modules={[FreeMode, Navigation, Thumbs]}
